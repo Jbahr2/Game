@@ -1,22 +1,21 @@
 /**
  * @author Kim Buckner
- * Date: Feb 01, 2017
+ * Date: Jan 13, 2019
  *
  *
  * A starting point for the COSC 3011 programming assignment
  * Probably need to fix a bunch of stuff, but this compiles and runs.
  *
  * This COULD be part of a package but I choose to make the starting point NOT a
- * package. However all other added elements can certainly be sub-packages, and
- * probably should be. 
+ * package. However all other added elements should be sub-packages.
  *
  * Main should NEVER do much more than this in any program that is
- * user-interface intensive, such as this one.
+ * user-interface intensive, such as this one. If I find that you have chosen
+ * NOT to use Object-Oriented design methods, I will take huge deductions. 
  * 
- *  Maybe it will work now on Windows with Eclipse 2018-12 and Java11
+ * 
  */
 
-//package game;
 import javax.swing.*;
 import java.awt.*;
 
@@ -43,6 +42,9 @@ public class Main
     // Answer is, have the "game" do it.
 
     game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    // Use colors that are viewable on ALL DEVICES, Stay away from yellows, do
+    // NOT use black or white. 
     game.getContentPane().setBackground(Color.cyan);
     game.setUp();
     

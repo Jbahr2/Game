@@ -1,6 +1,6 @@
 /**
  * @author Kim Buckner
- * Date: Feb 01, 2017
+ * Date: Jan 13, 2019
  *
  * This is the actual "game". Will have to make some major changes.
  * This is just a "hollow" shell.
@@ -12,11 +12,9 @@
  * tiles will be when we get them stuffed in.
  *
  * This COULD be part of a package but I choose to make the starting point NOT a
- * package. However all other added elements can certainly be sub-packages, and
- * probably should be. 
+ * package. However all other added elements should certainly sub-packages.
  */
 
-//package game;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,13 +24,13 @@ public class GameWindow extends JFrame implements ActionListener
 {
   /**
    * because it is a serializable object, need this or javac
-   * complains <b>a lot</b>
+   * complains <b>a lot</b>, the ID can be any integer.
    */
   public static final long serialVersionUID=1;
 
   /*
-   * Here I declare some buttons and declare an array to hold the grid elements. 
-   * But, you can do what you want.
+   * This is so I can try changing the starting point easily. Can certainly be
+   * left out altogether. 
    */
   private int startAt=1;
   
@@ -76,22 +74,28 @@ public class GameWindow extends JFrame implements ActionListener
 
   public void setUp()
   {
-    //actually create the array for elements, make sure it is big enough
+    // actually create the array for elements, make sure it is big enough
     
     // Need to play around with the dimensions and the gridx/y values
     // These constraints are going to be added to the pieces/parts I 
     // stuff into the "GridBag".
     // YOU CAN USE any type of constraints you like. Just make it work.
+    
     GridBagConstraints basic = new GridBagConstraints();
     basic.gridx=startAt;
     basic.gridy=0;
     basic.gridwidth=1;
     basic.gridheight=1;
+
     // This is really a constant in the GrdiBagConstraints. This way we 
     // don't need to know what type/value it is
+    
     basic.fill=GridBagConstraints.BOTH;
 
-    //Here I should create 16 elements to put into my gameBoard
+    //Here I should create 16 -Elements- to put into my gameBoard
+    //THE ELEMENTS CANNOT BE BUTTONS!!!!!!!!
+    //I can also just arrange things as I like then have methods, or an
+    //argument to the constructor that adds elements. 
 
     // Now I add each one, modifying the default gridx/y and add
     // it along with the modified constraint
