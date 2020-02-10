@@ -29,12 +29,11 @@ public class Main
   public static void main(String[] args)
   {
     // This is the play area
-    // HEY FIX THE NAME, WHAT IS ****YOUR**** GROUP
-    GameWindow game = new GameWindow("Group X aMaze");
+    GameWindow game = new GameWindow("Group H aMaze");
     
     // have to override the default layout to reposition things!!!!!!!
 
-    game.setSize(new Dimension(900, 1000));
+    game.setSize(new Dimension(900, 800));
     
     // So the debate here was, do I make the GameWindow object the game
     // or do I make main() the game, manipulating a window?
