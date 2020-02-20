@@ -17,6 +17,7 @@ public class SidePanel extends JPanel {
 
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
+		// initialize tiles for each player
 		for (int i = 0; i < 8; i++) {
 			Tile tile = new Tile("R");
 			tile.setBackground(new Color(69, 170, 242));
