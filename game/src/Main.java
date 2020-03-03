@@ -1,3 +1,4 @@
+
 /**
  * @author Kim Buckner
  * Date: Jan 13, 2019
@@ -19,65 +20,58 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Main 
-{
+public class Main {
 
-  // Probably should declare any buttons here
-  public JButton lbutton, rbutton, mbutton;
-  
+    // Probably should declare any buttons here
+    public JButton lbutton, rbutton, mbutton;
 
-  public static void main(String[] args)
-  {
-    // This is the play area
-    GameWindow game = new GameWindow("Group H aMaze");
-    
-    // have to override the default layout to reposition things!!!!!!!
+    public static void main(String[] args) {
+        // This is the play area
+        GameWindow game = new GameWindow("Group H aMaze");
 
-    game.setSize(new Dimension(900, 800));
-    
-    // So the debate here was, do I make the GameWindow object the game
-    // or do I make main() the game, manipulating a window?
-    // Should GameWindow methods know what they store?
-    // Answer is, have the "game" do it.
+        // have to override the default layout to reposition things!!!!!!!
 
-    game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        game.setSize(new Dimension(900, 1000));
 
-    // Use colors that are viewable on ALL DEVICES, Stay away from yellows, do
-    // NOT use black or white. 
-    game.getContentPane().setBackground(new Color(119, 140, 163));
-    game.setUp();
-    
-    // May or may not need this
-    
-    game.setVisible(true);
+        // So the debate here was, do I make the GameWindow object the game
+        // or do I make main() the game, manipulating a window?
+        // Should GameWindow methods know what they store?
+        // Answer is, have the "game" do it.
 
-    // You will HAVE to read some documentation and catch exceptions so get used
-    // to it. 
+        game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    try {
-      // The 4 that are installed on Linux here
-      // May have to test on Windows boxes to see what is there.
-      UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-      // This is the "Java" or CrossPlatform version and the default
-      //UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-      // Linux only
-      //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-      // really old style Motif 
-      //UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-    } 
-    catch (UnsupportedLookAndFeelException e) {
-     // handle possible exception
+        // Use colors that are viewable on ALL DEVICES, Stay away from yellows, do
+        // NOT use black or white.
+        game.getContentPane().setBackground(new Color(119, 140, 163));
+        game.setUp();
+
+        // May or may not need this
+
+        game.setVisible(true);
+
+        // You will HAVE to read some documentation and catch exceptions so get used
+        // to it.
+
+        try {
+            // The 4 that are installed on Linux here
+            // May have to test on Windows boxes to see what is there.
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+            // This is the "Java" or CrossPlatform version and the default
+            // UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+            // Linux only
+            // UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+            // really old style Motif
+            // UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+        } catch (UnsupportedLookAndFeelException e) {
+            // handle possible exception
+        } catch (ClassNotFoundException e) {
+            // handle possible exception
+        } catch (InstantiationException e) {
+            // handle possible exception
+        } catch (IllegalAccessException e) {
+            // handle possible exception
+        }
+
     }
-    catch (ClassNotFoundException e) {
-     // handle possible exception
-    }
-    catch (InstantiationException e) {
-     // handle possible exception
-    }
-    catch (IllegalAccessException e) {
-     // handle possible exception
-    }
-  
-  }
-  
+
 };
