@@ -22,129 +22,129 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameWindow extends JFrame implements ActionListener {
-	/**
-	 * because it is a serializable object, need this or javac complains <b>a
-	 * lot</b>, the ID can be any integer.
-	 */
-	public static final long serialVersionUID = 1;
+    /**
+     * because it is a serializable object, need this or javac complains <b>a
+     * lot</b>, the ID can be any integer.
+     */
+    public static final long serialVersionUID = 1;
 
-	/*
-	 * This is so I can try changing the starting point easily. Can certainly be
-	 * left out altogether.
-	 */
-	private int startAt = 1;
+    /*
+     * This is so I can try changing the starting point easily. Can certainly be
+     * left out altogether.
+     */
+    private int startAt = 1;
 
-	/**
-	 * Constructor sets the window name using super(), changes the layout, which you
-	 * really need to read up on, and maybe you can see why I chose this one.
-	 *
-	 * @param s
-	 */
+    /**
+     * Constructor sets the window name using super(), changes the layout, which you
+     * really need to read up on, and maybe you can see why I chose this one.
+     *
+     * @param s
+     */
 
-	public GameWindow(String s) {
-		super(s);
-		GridBagLayout gbl = new GridBagLayout();
-		setLayout(gbl);
-	}
+    public GameWindow(String s) {
+        super(s);
+        GridBagLayout gbl = new GridBagLayout();
+        setLayout(gbl);
+    }
 
-	/**
-	 * For the buttons
-	 * 
-	 * @param e is the ActionEvent
-	 * 
-	 *          BTW can ask the event for the name of the object generating event.
-	 *          The odd syntax for non-java people is that "exit" for instance is
-	 *          converted to a String object, then that object's equals() method is
-	 *          called.
-	 */
+    /**
+     * For the buttons
+     * 
+     * @param e is the ActionEvent
+     * 
+     *          BTW can ask the event for the name of the object generating event.
+     *          The odd syntax for non-java people is that "exit" for instance is
+     *          converted to a String object, then that object's equals() method is
+     *          called.
+     */
 
-	public void actionPerformed(ActionEvent e) {
-		if ("exit".equals(e.getActionCommand()))
-			System.exit(0);
-		if ("reset".equals(e.getActionCommand()))
-			System.out.println("reset pressed\n");
-		if ("new".equals(e.getActionCommand()))
-			System.out.println("new pressed\n");
-	}
+    public void actionPerformed(ActionEvent e) {
+        if ("exit".equals(e.getActionCommand()))
+            System.exit(0);
+        // if ("reset".equals(e.getActionCommand()))
 
-	/**
-	 * Establishes the inital board
-	 */
+        // if ("new".equals(e.getActionCommand()))
 
-	public void setUp() {
-		// actually create the array for elements, make sure it is big enough
+    }
 
-		// Need to play around with the dimensions and the gridx/y values
-		// These constraints are going to be added to the pieces/parts I
-		// stuff into the "GridBag".
-		// YOU CAN USE any type of constraints you like. Just make it work.
+    /**
+     * Establishes the inital board
+     */
 
-		GridBagConstraints basic = new GridBagConstraints();
-		basic.gridx = startAt;
-		basic.gridy = 0;
+    public void setUp() {
+        // actually create the array for elements, make sure it is big enough
 
-		basic.insets = new Insets(16, 16, 0, 16);
+        // Need to play around with the dimensions and the gridx/y values
+        // These constraints are going to be added to the pieces/parts I
+        // stuff into the "GridBag".
+        // YOU CAN USE any type of constraints you like. Just make it work.
 
-		// This is really a constant in the GrdiBagConstraints. This way we
-		// don't need to know what type/value it is
+        GridBagConstraints basic = new GridBagConstraints();
+        basic.gridx = startAt;
+        basic.gridy = 0;
 
-		basic.fill = GridBagConstraints.BOTH;
+        basic.insets = new Insets(16, 16, 0, 16);
 
-		basic.anchor = GridBagConstraints.NORTH;
-		basic.fill = GridBagConstraints.HORIZONTAL;
-		basic.gridx = 1;
-		basic.gridy = 0;
-		this.addButtons(basic);
+        // This is really a constant in the GrdiBagConstraints. This way we
+        // don't need to know what type/value it is
 
-		basic.gridx = 0;
-		basic.gridy = 1;
-		basic.anchor = GridBagConstraints.WEST;
-		SidePanel rightPanel = new SidePanel();
-		this.add(rightPanel, basic);
+        basic.fill = GridBagConstraints.BOTH;
 
-		basic.gridx = 2;
-		basic.gridy = 1;
-		basic.anchor = GridBagConstraints.EAST;
-		SidePanel leftPanel = new SidePanel();
-		this.add(leftPanel, basic);
+        basic.anchor = GridBagConstraints.NORTH;
+        basic.fill = GridBagConstraints.HORIZONTAL;
+        basic.gridx = 1;
+        basic.gridy = 0;
+        this.addButtons(basic);
 
-		basic.gridx = 1;
-		basic.gridy = 1;
-		GameBoard gameBoard = new GameBoard();
-		add(gameBoard, basic);
+        basic.gridx = 0;
+        basic.gridy = 1;
+        basic.anchor = GridBagConstraints.WEST;
+        SidePanel rightPanel = new SidePanel(0);
+        this.add(rightPanel, basic);
 
-		return;
+        basic.gridx = 2;
+        basic.gridy = 1;
+        basic.anchor = GridBagConstraints.EAST;
+        SidePanel leftPanel = new SidePanel(1);
+        this.add(leftPanel, basic);
 
-	}
+        basic.gridx = 1;
+        basic.gridy = 1;
+        GameBoard gameBoard = new GameBoard();
+        add(gameBoard, basic);
 
-	/**
-	 * Used by setUp() to configure the buttons on a button bar and add it to the
-	 * gameBoard
-	 */
+        return;
 
-	public void addButtons(GridBagConstraints basic) {
-		JPanel btnMenu = new JPanel();
+    }
 
-		JButton newGameBtn = new JButton("New Game");
-		JButton resetBtn = new JButton("Reset");
-		JButton quitBtn = new JButton("Quit");
+    /**
+     * Used by setUp() to configure the buttons on a button bar and add it to the
+     * gameBoard
+     */
 
-		btnMenu.setBackground(new Color(254, 211, 48, 255));
+    public void addButtons(GridBagConstraints basic) {
+        JPanel btnMenu = new JPanel();
 
-		newGameBtn.setActionCommand("new");
-		newGameBtn.addActionListener(this);
+        JButton newGameBtn = new JButton("New Game");
+        JButton resetBtn = new JButton("Reset");
+        JButton quitBtn = new JButton("Quit");
 
-		resetBtn.setActionCommand("reset");
-		resetBtn.addActionListener(this);
+        btnMenu.setBackground(new Color(254, 211, 48, 255));
 
-		quitBtn.setActionCommand("exit");
-		quitBtn.addActionListener(this);
+        newGameBtn.setActionCommand("new");
+        newGameBtn.addActionListener(this);
 
-		btnMenu.add(newGameBtn);
-		btnMenu.add(resetBtn);
-		btnMenu.add(quitBtn);
-		this.add(btnMenu, basic);
+        resetBtn.setActionCommand("reset");
+        resetBtn.addActionListener(this);
 
-		return;
-	}
+        quitBtn.setActionCommand("exit");
+        quitBtn.addActionListener(this);
+
+        btnMenu.add(newGameBtn);
+        btnMenu.add(resetBtn);
+        btnMenu.add(quitBtn);
+        this.add(btnMenu, basic);
+
+        return;
+    }
 };
