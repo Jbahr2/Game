@@ -13,6 +13,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Tile extends JPanel {
+    
+    boolean empty = false;
+    
     public Tile() {
         super();
         setOpaque(true);
