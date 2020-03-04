@@ -16,11 +16,12 @@ public class Tile extends JPanel {
     
     boolean empty = false;
     
-    public Tile() {
+    public Tile(String name) {
         super();
-        setOpaque(true);
-        setBorder(BorderFactory.createEmptyBorder(100, 100,100, 100));//Worked on some
         setPreferredSize(new Dimension(100, 100));
+        setOpaque(true);
         setBackground(new Color(254, 211, 48));
+
+        add(new JLabel(name));
     }
 }

@@ -79,6 +79,7 @@ public class GameWindow extends JFrame implements ActionListener {
         // stuff into the "GridBag".
         // YOU CAN USE any type of constraints you like. Just make it work.
 
+
         GridBagConstraints basic = new GridBagConstraints();
         basic.gridx = startAt;
         basic.gridy = 0;
@@ -105,7 +106,7 @@ public class GameWindow extends JFrame implements ActionListener {
         basic.gridx = 2;
         basic.gridy = 1;
         basic.anchor = GridBagConstraints.EAST;
-        SidePanel leftPanel = new SidePanel(1);
+        SidePanel leftPanel = new SidePanel(8);
         this.add(leftPanel, basic);
 
         basic.gridx = 1;

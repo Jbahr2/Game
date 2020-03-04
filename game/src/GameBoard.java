@@ -28,10 +28,10 @@ public class GameBoard extends JPanel {
         for (int y = 0; y < 4; y++) {
             center.gridy = y;
             for (int x = 0; x < 4; x++) {
-                Tile tile = new Tile();
-                tile.setBorder(BorderFactory.createLineBorder(new Color(119, 140, 163), 1));
+                TileWrapper tileWrapper = new TileWrapper();
+
                 center.gridx = x;
-                add(tile, center);
+                add(tileWrapper, center);
             }
         }
     }
