@@ -16,7 +16,7 @@ public class Tile extends JPanel {
     public Tile() {
         super();
         setOpaque(true);
-        setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
+        setBorder(BorderFactory.createEmptyBorder(100, 100,100, 100));//Worked on some
         setPreferredSize(new Dimension(100, 100));
         setBackground(new Color(254, 211, 48));
     }
