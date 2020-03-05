@@ -79,12 +79,11 @@ public class GameWindow extends JFrame implements ActionListener {
         // stuff into the "GridBag".
         // YOU CAN USE any type of constraints you like. Just make it work.
 
-
+        ClickSwapper swapper = new ClickSwapper();
+        addMouseListener(swapper);
+        
         GridBagConstraints basic = new GridBagConstraints();
-        basic.gridx = startAt;
-        basic.gridy = 0;
-
-        basic.insets = new Insets(16, 16, 0, 16);
+        basic.insets = new Insets(5, 5, 5, 5);
 
         // This is really a constant in the GrdiBagConstraints. This way we
         // don't need to know what type/value it is
@@ -100,18 +99,18 @@ public class GameWindow extends JFrame implements ActionListener {
         basic.gridx = 0;
         basic.gridy = 1;
         basic.anchor = GridBagConstraints.WEST;
-        SidePanel rightPanel = new SidePanel(0);
+        SidePanel rightPanel = new SidePanel(1, swapper);
         this.add(rightPanel, basic);
 
         basic.gridx = 2;
         basic.gridy = 1;
         basic.anchor = GridBagConstraints.EAST;
-        SidePanel leftPanel = new SidePanel(8);
+        SidePanel leftPanel = new SidePanel(9, swapper);
         this.add(leftPanel, basic);
 
         basic.gridx = 1;
         basic.gridy = 1;
-        GameBoard gameBoard = new GameBoard();
+        GameBoard gameBoard = new GameBoard(swapper);
         add(gameBoard, basic);
 
         return;

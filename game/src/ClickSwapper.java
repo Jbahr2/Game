@@ -3,10 +3,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.SwingUtilities;
 
 class ClickSwapper extends MouseAdapter {
 
-    Tile selected = null;
+    TileWrapper selected = null;
 
     public ClickSwapper() {
     }
@@ -14,36 +15,39 @@ class ClickSwapper extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
         Object source = e.getSource();
-        if (source instanceof Tile) {
+        if (source instanceof TileWrapper) {
+            TileWrapper clickedTile = (TileWrapper) source;
 
-            Tile clickedTile = (Tile) source;
-
-            if (selected == null) {
-                setSelected(clickedTile);
-            } else if (!clickedTile.empty) { // check if clicked tile isnt null
-                swapTiles(selected, clickedTile);
-                removeSelected();
-            } else {
-                removeSelected();
+            if (SwingUtilities.isLeftMouseButton(e)) { // moving tile
+                
+                if (selected == null && clickedTile.hasTile()) { // selecting a new tile
+                    select(clickedTile);
+                } else if (!clickedTile.hasTile()) { // moving to an empty tile
+                    moveTile(selected, clickedTile);
+                    deselct();
+                } else {
+                    deselct();
+                }
             }
         } else {
-            removeSelected();
+            deselct();
         }
     }
 
-    private void swapTiles(Tile tile1, Tile tile2) {
-
+    private void moveTile(TileWrapper tile1, TileWrapper tile2) {
+        tile2.setTile(tile1.getTile());
+        tile1.removeTile();
     }
 
-    private void removeSelected() {
+    private void deselct() {
         if (selected != null) {
-            selected.setBorder(BorderFactory.createEmptyBorder());
+            selected.setAsUnselected();
             selected = null;
         }
     }
 
-    private void setSelected(Tile tile) {
+    private void select(TileWrapper tile) {
         selected = tile;
-        selected.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 0)));
+        selected.setAsSelected();
     }
 }

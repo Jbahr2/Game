@@ -13,15 +13,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Tile extends JPanel {
-    
-    boolean empty = false;
-    
+        
     public Tile(String name) {
         super();
-        setPreferredSize(new Dimension(100, 100));
         setOpaque(true);
-        setBackground(new Color(254, 211, 48));
-
+        setBackground(new Color(69, 170, 242));
         add(new JLabel(name));
     }
 }

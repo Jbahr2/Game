@@ -20,25 +20,24 @@ import javax.swing.JLabel;
 
 public class SidePanel extends JPanel {
 
-    public SidePanel(int side) {
+    public SidePanel(int side, ClickSwapper swapper) {
         GridBagLayout gbl = new GridBagLayout();
         setLayout(gbl);
 
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.insets = new Insets(10,0,10,0);
+        constraints.insets = new Insets(5, 0, 0, 0);
         setBackground(new Color(0, 0, 0, 0));
 
-        
         // initialize tiles for each player
         for (int i = 0; i < 8; i++) {
             constraints.gridy = i;
-            Tile tile = new Tile(""+(side+i));
-            tile.setBackground(new Color(69, 170, 242));
-            
-            TileWrapper tileWrapper = new TileWrapper();
+            Tile tile = new Tile(Integer.toString(side + i));
+
+            TileWrapper tileWrapper = new TileWrapper(swapper);
             tileWrapper.setTile(tile);
-            
+
             add(tileWrapper, constraints);
         }
     }
+    
 }
