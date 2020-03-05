@@ -95,12 +95,14 @@ public class GameWindow extends JFrame implements ActionListener {
         basic.gridx = 1;
         basic.gridy = 0;
         this.addButtons(basic);
-
+        
         basic.gridx = 0;
         basic.gridy = 1;
         basic.anchor = GridBagConstraints.WEST;
         SidePanel rightPanel = new SidePanel(1, swapper);
         this.add(rightPanel, basic);
+
+        // want to be able to add swapper outside of constructor call for panels and board, more elegant
 
         basic.gridx = 2;
         basic.gridy = 1;
