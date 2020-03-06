@@ -22,7 +22,7 @@ class ClickSwapper extends MouseAdapter {
                 
                 if (selected == null && clickedTile.hasTile()) { // selecting a new tile
                     select(clickedTile);
-                } else if (!clickedTile.hasTile()) { // moving to an empty tile
+                } else if (selected != null && !clickedTile.hasTile()) { // moving to an empty tile
                     moveTile(selected, clickedTile);
                     deselct();
                 } else {
