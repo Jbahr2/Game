@@ -1,0 +1,5 @@
+
+
+To move a tile, click once using the left mouse button and then click once on an empty tile to move it there. 
+The selected tile that you plan on moving should have a border surronding it, letting you know which tile you have selected.
+If you click on anything that isn't an empty tile, the tile you planned on moving will be deselected, indicated by the removal of its border.
