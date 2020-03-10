@@ -1,3 +1,11 @@
+/* *
+ * Authored by Group H
+ * Class: Software Design 3011
+ * Last Edited: 03/10/2020
+ * 
+ * Description: This is the wrapper used hold the tiles.
+ * */
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,7 +26,7 @@ public class TileWrapper extends JPanel {
         setLayout(bl);
         setOpaque(true);
 
-        int size = 50;
+        int size = 100;
         setPreferredSize(new Dimension(size, size));
 
         setBackground(new Color(254, 211, 48, 255));

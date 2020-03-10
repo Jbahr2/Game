@@ -1,6 +1,7 @@
 /* *
- * author: Group H
- * date: 3/3/2020
+ * Authored by Group H
+ * Class: Software Design 3011
+ * Last Edited: 03/10/2020
  * 
  * Tile class
  * utilizes panels now instead of labels

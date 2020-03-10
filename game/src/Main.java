@@ -14,6 +14,9 @@
  * user-interface intensive, such as this one. If I find that you have chosen
  * NOT to use Object-Oriented design methods, I will take huge deductions. 
  * 
+ * Edited by Group H
+ * Class: Software Design 3011
+ * Last Edited: 03/10/2020
  * 
  */
 
@@ -63,13 +66,18 @@ public class Main {
             // really old style Motif
             // UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
         } catch (UnsupportedLookAndFeelException e) {
-            // handle possible exception
+            //System.out.println("Error: Unsupported look and feel exception.");
+            System.out.println(e);
+            System.exit(1);
         } catch (ClassNotFoundException e) {
-            // handle possible exception
+            System.out.println(e);
+            System.exit(1);
         } catch (InstantiationException e) {
-            // handle possible exception
+            System.out.println(e);
+            System.exit(1);
         } catch (IllegalAccessException e) {
-            // handle possible exception
+            System.out.println(e);
+            System.exit(1);
         }
 
     }

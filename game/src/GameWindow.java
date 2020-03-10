@@ -1,20 +1,17 @@
 
-/**
+/* *
  * @author Kim Buckner
  * Date: Jan 13, 2019
  *
  * This is the actual "game". Will have to make some major changes.
- * This is just a "hollow" shell.
  *
- * When you get done, I should see the buttons at the top in the "play" area
- * (NOT a pull-down menu). The only one that should do anything is Quit.
- *
- * Should also see something that shows where the 4x4 board and the "spare"
- * tiles will be when we get them stuffed in.
- *
- * This COULD be part of a package but I choose to make the starting point NOT a
- * package. However all other added elements should certainly sub-packages.
- */
+ * Description: This contains the code that sets up the window, and
+ * handles actions performed.
+ * 
+ * Edited by Group H
+ * Class: Software Design 3011
+ * Last Edited: 03/10/2020
+ * */
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,8 +32,9 @@ public class GameWindow extends JFrame implements ActionListener {
     private int startAt = 1;
 
     /**
-     * Constructor sets the window name using super(), changes the layout, which you
-     * really need to read up on, and maybe you can see why I chose this one.
+     * Constructor sets the window name using super(), changes the layout, which
+     * you really need to read up on, and maybe you can see why I chose this
+     * one.
      *
      * @param s
      */
@@ -52,10 +50,10 @@ public class GameWindow extends JFrame implements ActionListener {
      * 
      * @param e is the ActionEvent
      * 
-     *          BTW can ask the event for the name of the object generating event.
-     *          The odd syntax for non-java people is that "exit" for instance is
-     *          converted to a String object, then that object's equals() method is
-     *          called.
+     *          BTW can ask the event for the name of the object generating
+     *          event. The odd syntax for non-java people is that "exit" for
+     *          instance is converted to a String object, then that object's
+     *          equals() method is called.
      */
 
     public void actionPerformed(ActionEvent e) {
@@ -81,7 +79,7 @@ public class GameWindow extends JFrame implements ActionListener {
 
         ClickSwapper swapper = new ClickSwapper();
         addMouseListener(swapper);
-        
+
         GridBagConstraints basic = new GridBagConstraints();
         basic.insets = new Insets(5, 5, 5, 5);
 
@@ -95,14 +93,16 @@ public class GameWindow extends JFrame implements ActionListener {
         basic.gridx = 1;
         basic.gridy = 0;
         this.addButtons(basic);
-        
+
         basic.gridx = 0;
         basic.gridy = 1;
         basic.anchor = GridBagConstraints.WEST;
         SidePanel rightPanel = new SidePanel(0, swapper);
         this.add(rightPanel, basic);
 
-        // want to be able to add swapper outside of constructor call for panels and board, more elegant
+        // want to be able to add swapper outside of constructor call for panels
+        // and
+        // board, more elegant
 
         basic.gridx = 2;
         basic.gridy = 1;
@@ -120,8 +120,8 @@ public class GameWindow extends JFrame implements ActionListener {
     }
 
     /**
-     * Used by setUp() to configure the buttons on a button bar and add it to the
-     * gameBoard
+     * Used by setUp() to configure the buttons on a button bar and add it to
+     * the gameBoard
      */
 
     public void addButtons(GridBagConstraints basic) {

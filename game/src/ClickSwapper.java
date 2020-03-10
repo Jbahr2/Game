@@ -1,3 +1,12 @@
+
+/* *
+ * Edited by Group H
+ * Class: Software Design 3011
+ * Last Edited: 03/10/2020
+ * 
+ * Description: This is our code to handle the mouse input.
+ * */
+
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
