@@ -3,7 +3,7 @@
  * Class: Software Design 3011
  * Last Edited: 03/10/2020
  * 
- * Create the grid in the center
+ * Description: Create the grid in the center
  * */
 import java.awt.Color;
 import java.awt.GridBagConstraints;

@@ -4,7 +4,7 @@
  * Class: Software Design 3011
  * Last Edited: 03/10/2020
  * 
- * Description: This is our code to handle the mouse input.
+ * Description: Handles the mouse input and moving tiles.
  * */
 
 import java.awt.Color;

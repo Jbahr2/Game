@@ -3,9 +3,7 @@
  * Class: Software Design 3011
  * Last Edited: 03/10/2020
  * 
- * Tile class
- * utilizes panels now instead of labels
- * 
+ * Description: movable tile with identifier
  * */
 
 import java.awt.Color;

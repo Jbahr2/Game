@@ -4,8 +4,7 @@
  * Class: Software Design 3011
  * Last Edited: 03/10/2020
  * 
- * Creates the tiles on the side of the game board.
- *  
+ * Description: Creates the tiles on the side of the game board.
  * */
 import java.awt.Color;
 
