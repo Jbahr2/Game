@@ -13,6 +13,7 @@ import java.awt.geom.Line2D;
 import java.awt.BasicStroke;
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class Tile extends JPanel {
 
 	private float x1[],x2[],y1[],y2[];

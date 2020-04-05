@@ -11,6 +11,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class GameBoard extends JPanel {
 	private TileWrapper[] tileWrapper = new TileWrapper[16];
     public GameBoard(ClickSwapper swapper) {

@@ -12,6 +12,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class SidePanel extends JPanel {
 	private TileWrapper[] tileWrapper = new TileWrapper[8];
     public SidePanel(int side, ClickSwapper swapper, FileDecoder filedecoder) {

@@ -13,6 +13,7 @@ import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class TileWrapper extends JPanel {
 
     private Tile tile;
