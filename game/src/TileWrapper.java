@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 public class TileWrapper extends JPanel {
 
     private Tile tile;
+    private Tile sTile;
     private Color borderColor = new Color(100, 100, 0);
 
     public TileWrapper(ClickSwapper swapper) {
@@ -38,6 +39,9 @@ public class TileWrapper extends JPanel {
     public Tile getTile() {
         return tile;
     }
+    public Tile getStartingTile() {
+        return sTile;
+    }
     public void removeTile() {
         if (tile != null) {
             remove(tile);
@@ -45,7 +49,7 @@ public class TileWrapper extends JPanel {
             updateBorder();
         }
     }
-
+    
     public void setTile(Tile toSet) {
         if (toSet != null) {
             tile = toSet;
@@ -53,11 +57,12 @@ public class TileWrapper extends JPanel {
             add(tile, BorderLayout.CENTER);
         }
     }
-
+    public void InitializeTile(Tile toSet) {
+    	sTile = toSet;
+    }
     public boolean hasTile() {
         return tile != null;
     }
-    
     public void setAsSelected() {
         setBorder(BorderFactory.createLineBorder(borderColor));
     }

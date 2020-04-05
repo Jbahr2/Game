@@ -41,7 +41,7 @@ class ClickSwapper extends MouseAdapter {
         }
     }
 
-    private void moveTile(TileWrapper tile1, TileWrapper tile2) {
+    public void moveTile(TileWrapper tile1, TileWrapper tile2) {
         tile2.setTile(tile1.getTile());
         tile1.removeTile();
     }
