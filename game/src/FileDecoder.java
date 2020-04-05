@@ -68,6 +68,6 @@ public class FileDecoder {
 		return numLines[i];
 	}
 	public int getTileNum() {
-		return 4;
+		return numberOfTiles;
 	}
 }
