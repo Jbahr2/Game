@@ -21,10 +21,12 @@ public class SidePanel extends JPanel {
         constraints.insets = new Insets(5, 0, 0, 0);
         setBackground(new Color(0, 0, 0, 0));
         // initialize tiles for each player
+        int Ntile;
         for (int i = 0; i < 8; i++) {
             constraints.gridy = i;
-            int Ntile = side + i;
-            Tile tile = new Tile(filedecoder.getX1(Ntile), filedecoder.getX2(Ntile), filedecoder.getY1(Ntile),filedecoder.getY2(Ntile),filedecoder.getNumLines(Ntile));
+             Ntile = side + i;
+            Tile tile = new Tile();
+            tile.SetTileInfo(filedecoder.getX1(Ntile), filedecoder.getX2(Ntile), filedecoder.getY1(Ntile),filedecoder.getY2(Ntile),filedecoder.getNumLines(Ntile));
             TileWrapper tileWrapper = new TileWrapper(swapper);
             tileWrapper.setTile(tile);
 
