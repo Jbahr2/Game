@@ -109,13 +109,13 @@ public class GameWindow extends JFrame implements ActionListener {
         basic.gridx = 2;
         basic.gridy = 1;
         basic.anchor = GridBagConstraints.EAST;
-        SidePanel leftPanel = new SidePanel(8, swapper, filedecoder);
+        SidePanel leftPanel = new SidePanel(1, swapper, filedecoder);
         this.leftPanel = leftPanel;
         this.add(leftPanel, basic);
 
         basic.gridx = 1;
         basic.gridy = 1;
-        GameBoard gameBoard = new GameBoard(swapper);
+        GameBoard gameBoard = new GameBoard(swapper, filedecoder);
         this.gameBoard = gameBoard;
         add(gameBoard, basic);
 

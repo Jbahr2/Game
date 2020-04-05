@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 public class SidePanel extends JPanel {
 	private TileWrapper[] tileWrapper;
     public SidePanel(int side, ClickSwapper swapper, FileDecoder filedecoder) {
-    	int TileCount = 8;
+    	int TileCount = filedecoder.getTileNum()/2;
     	int Ntile;
         GridBagLayout gbl = new GridBagLayout();
         setLayout(gbl);
@@ -27,7 +27,7 @@ public class SidePanel extends JPanel {
         // initialize tiles for each player
         for (int i = 0; i < TileCount; i++) {
             constraints.gridy = i;
-            Ntile = side + i;
+            Ntile = side * TileCount + i;
             Tile tile = new Tile();
             tile.SetTileInfo(filedecoder.getX1(Ntile), filedecoder.getX2(Ntile), filedecoder.getY1(Ntile),filedecoder.getY2(Ntile),filedecoder.getNumLines(Ntile));
             TileWrapper tileWrapper = new TileWrapper(swapper);

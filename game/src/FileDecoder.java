@@ -7,8 +7,9 @@ import java.nio.file.Paths;
 public class FileDecoder {
      private float[][] x1, x2, y1, y2;
 	 private int[] numLines;
+	 private int numberOfTiles;
 	private void filetoByteArray(String path) {
-		int numberOfTiles, tileNumber; 
+		int tileNumber; 
 		Path tpath = Paths.get(path);
 		byte[] data = null;
 		
@@ -65,5 +66,8 @@ public class FileDecoder {
 	public int getNumLines(int i) 
 	{
 		return numLines[i];
+	}
+	public int getTileNum() {
+		return 4;
 	}
 }

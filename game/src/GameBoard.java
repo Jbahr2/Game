@@ -14,8 +14,8 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class GameBoard extends JPanel {
 	private TileWrapper[] tileWrapper;
-    public GameBoard(ClickSwapper swapper) {
-    	int Gridnum = 4;
+    public GameBoard(ClickSwapper swapper, FileDecoder filedecoder) {
+    	int Gridnum = (int)Math.sqrt(filedecoder.getTileNum());
         GridBagLayout gbl = new GridBagLayout();
         setLayout(gbl);
 
