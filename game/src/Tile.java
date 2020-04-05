@@ -10,11 +10,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.awt.BasicStroke;
 import javax.swing.*;
 
@@ -45,7 +40,6 @@ public class Tile extends JPanel {
     	G2D.setStroke(new BasicStroke(2.5f));
     	for(int i = 0; i < numLines; i++)
     	G2D.draw(new Line2D.Float(x1[i], y1[i], x2[i], y2[i]));
-    	System.out.println(numLines + " lines");
     }
 	
 }

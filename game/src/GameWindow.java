@@ -34,7 +34,6 @@ public class GameWindow extends JFrame implements ActionListener {
      * This is so I can try changing the starting point easily. Can certainly be
      * left out altogether.
      */
-    private int startAt = 1;
 
     /**
      * Constructor sets the window name using super(), changes the layout, which
@@ -43,12 +42,12 @@ public class GameWindow extends JFrame implements ActionListener {
      *
      * @param s
      */	 
-     float[][] x1 = new float[16][];
-	 float[][] x2 = new float[16][];
-	 float[][] y1 = new float[16][];
-	 float[][] y2 = new float[16][];
-	 int numberOfTiles, tileNumber; 
-	 int[] numLines = new int[16];
+     private float[][] x1 = new float[16][];
+	 private float[][] x2 = new float[16][];
+	 private float[][] y1 = new float[16][];
+	 private float[][] y2 = new float[16][];
+	 private int numberOfTiles, tileNumber; 
+	 private int[] numLines = new int[16];
 
     public GameWindow(String s) {
         super(s);
@@ -73,11 +72,10 @@ public class GameWindow extends JFrame implements ActionListener {
         // if ("reset".equals(e.getActionCommand()))
 
         // if ("new".equals(e.getActionCommand()))
-
     }
 
     /**
-     * Establishes the inital board
+     * Establishes the initial board
      */
 
     public void setUp() {
@@ -174,13 +172,10 @@ public class GameWindow extends JFrame implements ActionListener {
 		ByteBuffer buffer = ByteBuffer.wrap(data);
 		
 		numberOfTiles = buffer.getInt();
-		System.out.println(numberOfTiles + " 1");
 
 	       for(int i = 0; i < numberOfTiles; i++)  {
 	           tileNumber = buffer.getInt();
-	           System.out.print("Tile " + tileNumber + ": ");
 	           numLines[i] = buffer.getInt();
-	           System.out.println(numLines[i] + " lines");
 	           x1[tileNumber] = new float[numLines[i]];
 	           x2[tileNumber] = new float[numLines[i]];
 	           y1[tileNumber] = new float[numLines[i]];
@@ -190,8 +185,6 @@ public class GameWindow extends JFrame implements ActionListener {
 	               y1[tileNumber][j] = buffer.getFloat();
 	               x2[tileNumber][j] = buffer.getFloat();
 	               y2[tileNumber][j] = buffer.getFloat();
-	               
-	               System.out.println("\t" + j + ": " + x1[tileNumber][j] + " " + y1[tileNumber][j] + " " + x2[tileNumber][j] +" " + y2[tileNumber][j]);
 	           }
 	           
 	       }
