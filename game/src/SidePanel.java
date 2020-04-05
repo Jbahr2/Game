@@ -14,17 +14,18 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class SidePanel extends JPanel {
-	private TileWrapper[] tileWrapper = new TileWrapper[8];
+	private TileWrapper[] tileWrapper;
     public SidePanel(int side, ClickSwapper swapper, FileDecoder filedecoder) {
+    	int TileCount = 8;
+    	int Ntile;
         GridBagLayout gbl = new GridBagLayout();
         setLayout(gbl);
-
+        tileWrapper = new TileWrapper[TileCount];
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.insets = new Insets(5, 0, 0, 0);
         setBackground(new Color(0, 0, 0, 0));
         // initialize tiles for each player
-        int Ntile;
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < TileCount; i++) {
             constraints.gridy = i;
             Ntile = side + i;
             Tile tile = new Tile();
@@ -38,7 +39,7 @@ public class SidePanel extends JPanel {
     }
     public void resetside()
     {
-    	for(int i = 0; i < 8; i++)
+    	for(int i = 0; i < tileWrapper.length; i++)
     		tileWrapper[i].setTile(tileWrapper[i].getStartingTile());
     }
 }
