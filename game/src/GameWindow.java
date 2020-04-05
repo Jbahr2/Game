@@ -42,12 +42,6 @@ public class GameWindow extends JFrame implements ActionListener {
      *
      * @param s
      */	 
-     private float[][] x1 = new float[16][];
-	 private float[][] x2 = new float[16][];
-	 private float[][] y1 = new float[16][];
-	 private float[][] y2 = new float[16][];
-	 private int numberOfTiles, tileNumber; 
-	 private int[] numLines = new int[16];
 
     public GameWindow(String s) {
         super(s);
@@ -85,10 +79,11 @@ public class GameWindow extends JFrame implements ActionListener {
         // These constraints are going to be added to the pieces/parts I
         // stuff into the "GridBag".
         // YOU CAN USE any type of constraints you like. Just make it work.
-    	filetoByteArray();
+    	FileDecoder filedecoder = new FileDecoder();
+    	filedecoder.readfile("input\\default.mze");
     	
         ClickSwapper swapper = new ClickSwapper();
-        addMouseListener(swapper);
+    	addMouseListener(swapper);
 
         GridBagConstraints basic = new GridBagConstraints();
         basic.insets = new Insets(5, 5, 5, 5);
@@ -107,7 +102,7 @@ public class GameWindow extends JFrame implements ActionListener {
         basic.gridx = 0;
         basic.gridy = 1;
         basic.anchor = GridBagConstraints.WEST;
-        SidePanel rightPanel = new SidePanel(0, swapper, x1, x2, y1, y2, numLines, numberOfTiles, tileNumber);
+        SidePanel rightPanel = new SidePanel(0, swapper, filedecoder);
         this.add(rightPanel, basic);
 
         // want to be able to add swapper outside of constructor call for panels
@@ -117,7 +112,7 @@ public class GameWindow extends JFrame implements ActionListener {
         basic.gridx = 2;
         basic.gridy = 1;
         basic.anchor = GridBagConstraints.EAST;
-        SidePanel leftPanel = new SidePanel(8, swapper, x1, x2, y1, y2, numLines, numberOfTiles, tileNumber);
+        SidePanel leftPanel = new SidePanel(8, swapper, filedecoder);
         this.add(leftPanel, basic);
 
         basic.gridx = 1;
@@ -159,34 +154,5 @@ public class GameWindow extends JFrame implements ActionListener {
 
         return;
     }
-	private void filetoByteArray() {
-		Path tpath = Paths.get("src\\default.mze");
-		byte[] data = null;
-		
-		try {
-			data = Files.readAllBytes(tpath);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		ByteBuffer buffer = ByteBuffer.wrap(data);
-		
-		numberOfTiles = buffer.getInt();
 
-	       for(int i = 0; i < numberOfTiles; i++)  {
-	           tileNumber = buffer.getInt();
-	           numLines[i] = buffer.getInt();
-	           x1[tileNumber] = new float[numLines[i]];
-	           x2[tileNumber] = new float[numLines[i]];
-	           y1[tileNumber] = new float[numLines[i]];
-	           y2[tileNumber] = new float[numLines[i]];
-	           for(int j = 0; j < numLines[i]; j++) {
-	               x1[tileNumber][j] = buffer.getFloat();
-	               y1[tileNumber][j] = buffer.getFloat();
-	               x2[tileNumber][j] = buffer.getFloat();
-	               y2[tileNumber][j] = buffer.getFloat();
-	           }
-	           
-	       }
-		}
 };

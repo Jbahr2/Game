@@ -13,7 +13,7 @@ import java.awt.Insets;
 import javax.swing.JPanel;
 
 public class SidePanel extends JPanel {
-    public SidePanel(int side, ClickSwapper swapper, float x1[][], float x2[][], float y1[][], float y2[][], int[] numLines, int numberOfTiles, int tileNumber) {
+    public SidePanel(int side, ClickSwapper swapper, FileDecoder filedecoder) {
         GridBagLayout gbl = new GridBagLayout();
         setLayout(gbl);
 
@@ -24,7 +24,7 @@ public class SidePanel extends JPanel {
         for (int i = 0; i < 8; i++) {
             constraints.gridy = i;
             int Ntile = side + i;
-            Tile tile = new Tile(x1[Ntile], x2[Ntile], y1[Ntile],y2[Ntile],numLines[Ntile]);
+            Tile tile = new Tile(filedecoder.getX1(Ntile), filedecoder.getX2(Ntile), filedecoder.getY1(Ntile),filedecoder.getY2(Ntile),filedecoder.getNumLines(Ntile));
             TileWrapper tileWrapper = new TileWrapper(swapper);
             tileWrapper.setTile(tile);
 
