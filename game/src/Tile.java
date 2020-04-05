@@ -26,6 +26,7 @@ public class Tile extends JPanel {
 	 int numberOfTiles, tileNumber; 
 	 int[] numLines = new int[16];
 	public static int id = 0;
+	int myid = 0;
 	public int[] tilenum = new int[16];
 	public void filetoByteArray() {
 		Path tpath = Paths.get("src\\default.mze");
@@ -68,21 +69,17 @@ public class Tile extends JPanel {
         setOpaque(true);
         setBackground(new Color(69, 170, 242));
         add(new JLabel(name));
-        System.out.println("Name: " + name);
-        int i = Integer.parseInt(name);
-        tilenum[i] = i;
-        System.out.println("Name int: " + i);
+        myid = id;
+        id++;
     }
     @Override public void paintComponent(Graphics g) {
     	super.paintComponent(g);
     	Graphics2D G2D = (Graphics2D)g;
     	G2D.setColor(Color.BLACK);
     	G2D.setStroke(new BasicStroke(2.5f));
-    	int tnum = id % 15;
-    	System.out.println(tnum);
-    	for(int i = 0; i < numLines[tnum]; i++)
-    	G2D.draw(new Line2D.Float(x1[tnum][i], y1[tnum][i], x2[tnum][i], y2[tnum][i]));
-    	id++;
+    	for(int i = 0; i < numLines[myid]; i++)
+    	G2D.draw(new Line2D.Float(x1[myid][i], y1[myid][i], x2[myid][i], y2[myid][i]));
+    	System.out.println(numLines[myid] + " lines");
     }
 	
 }
