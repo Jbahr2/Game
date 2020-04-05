@@ -37,8 +37,7 @@ public class GameBoard extends JPanel {
     }
     public void resetboard()
     {
-    	for(int i = 0; i < 16; i++) {
+    	for(int i = 0; i < 16; i++)
     		tileWrapper[i].removeTile();
-    	}
     }
 }
