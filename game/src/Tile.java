@@ -15,14 +15,12 @@ import javax.swing.*;
 
 public class Tile extends JPanel {
 
-	int myid = 0;
-	float x1[],x2[],y1[],y2[];
-	int numLines;
-    public Tile(int name, float[] x1, float[] x2, float[] y1, float[] y2, int numLines) {
+	private float x1[],x2[],y1[],y2[];
+	private int numLines;
+    public Tile(float[] x1, float[] x2, float[] y1, float[] y2, int numLines) {
         super();
         setOpaque(true);
         setBackground(new Color(69, 170, 242));
-        myid = name;
         this.x1 = new float[numLines];
         this.x2 = new float[numLines];
         this.y1 = new float[numLines];
@@ -41,5 +39,4 @@ public class Tile extends JPanel {
     	for(int i = 0; i < numLines; i++)
     	G2D.draw(new Line2D.Float(x1[i], y1[i], x2[i], y2[i]));
     }
-	
 }

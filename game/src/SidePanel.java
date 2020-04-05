@@ -24,7 +24,7 @@ public class SidePanel extends JPanel {
         for (int i = 0; i < 8; i++) {
             constraints.gridy = i;
             int Ntile = side + i;
-            Tile tile = new Tile(Ntile, x1[Ntile], x2[Ntile], y1[Ntile],y2[Ntile],numLines[Ntile]);
+            Tile tile = new Tile(x1[Ntile], x2[Ntile], y1[Ntile],y2[Ntile],numLines[Ntile]);
             TileWrapper tileWrapper = new TileWrapper(swapper);
             tileWrapper.setTile(tile);
 
