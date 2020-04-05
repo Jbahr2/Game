@@ -5,10 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class FileDecoder {
-     private float[][] x1;
-	 private float[][] x2;
-	 private float[][] y1;
-	 private float[][] y2;
+     private float[][] x1, x2, y1, y2;
 	 private int[] numLines;
 	private void filetoByteArray(String path) {
 		int numberOfTiles, tileNumber; 
