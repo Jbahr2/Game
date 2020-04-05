@@ -19,67 +19,33 @@ import java.awt.BasicStroke;
 import javax.swing.*;
 
 public class Tile extends JPanel {
-	 float[][] x1 = new float[16][];
-	 float[][] x2 = new float[16][];
-	 float[][] y1 = new float[16][];
-	 float[][] y2 = new float[16][];
-	 int numberOfTiles, tileNumber; 
-	 int[] numLines = new int[16];
-	public static int id = 0;
-	int myid = 0;
-	public int[] tilenum = new int[16];
-	public void filetoByteArray() {
-		Path tpath = Paths.get("src\\default.mze");
-		byte[] data = null;
-		
-		try {
-			data = Files.readAllBytes(tpath);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		ByteBuffer buffer = ByteBuffer.wrap(data);
-		
-		numberOfTiles = buffer.getInt();
-		System.out.println(numberOfTiles + " 1");
 
-	       for(int i = 0; i < numberOfTiles; i++)  {
-	           tileNumber = buffer.getInt();
-	           System.out.print("Tile " + tileNumber + ": ");
-	           numLines[i] = buffer.getInt();
-	           System.out.println(numLines[i] + " lines");
-	           x1[tileNumber] = new float[numLines[i]];
-	           x2[tileNumber] = new float[numLines[i]];
-	           y1[tileNumber] = new float[numLines[i]];
-	           y2[tileNumber] = new float[numLines[i]];
-	           for(int j = 0; j < numLines[i]; j++) {
-	               x1[tileNumber][j] = buffer.getFloat();
-	               y1[tileNumber][j] = buffer.getFloat();
-	               x2[tileNumber][j] = buffer.getFloat();
-	               y2[tileNumber][j] = buffer.getFloat();
-	               
-	               System.out.println("\t" + j + ": " + x1[tileNumber][j] + " " + y1[tileNumber][j] + " " + x2[tileNumber][j] +" " + y2[tileNumber][j]);
-	           }
-	           
-	       }
-		}
-    public Tile(String name) {
+	int myid = 0;
+	float x1[],x2[],y1[],y2[];
+	int numLines;
+    public Tile(int name, float[] x1, float[] x2, float[] y1, float[] y2, int numLines) {
         super();
-        filetoByteArray();
         setOpaque(true);
         setBackground(new Color(69, 170, 242));
-        add(new JLabel(name));
-        myid = id;
-        id++;
+        myid = name;
+        this.x1 = new float[numLines];
+        this.x2 = new float[numLines];
+        this.y1 = new float[numLines];
+        this.y2 = new float[numLines];
+        this.x1 = x1;
+        this.x2 = x2;
+        this.y1 = y1;
+        this.y2 = y2;
+        this.numLines = numLines;
     }
     @Override public void paintComponent(Graphics g) {
     	super.paintComponent(g);
     	Graphics2D G2D = (Graphics2D)g;
     	G2D.setColor(Color.BLACK);
     	G2D.setStroke(new BasicStroke(2.5f));
-    	for(int i = 0; i < numLines[myid]; i++)
-    	G2D.draw(new Line2D.Float(x1[myid][i], y1[myid][i], x2[myid][i], y2[myid][i]));
-    	System.out.println(numLines[myid] + " lines");
+    	for(int i = 0; i < numLines; i++)
+    	G2D.draw(new Line2D.Float(x1[i], y1[i], x2[i], y2[i]));
+    	System.out.println(numLines + " lines");
     }
 	
 }

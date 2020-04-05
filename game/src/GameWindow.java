@@ -17,6 +17,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class GameWindow extends JFrame implements ActionListener {
     /**
@@ -37,7 +42,13 @@ public class GameWindow extends JFrame implements ActionListener {
      * one.
      *
      * @param s
-     */
+     */	 
+     float[][] x1 = new float[16][];
+	 float[][] x2 = new float[16][];
+	 float[][] y1 = new float[16][];
+	 float[][] y2 = new float[16][];
+	 int numberOfTiles, tileNumber; 
+	 int[] numLines = new int[16];
 
     public GameWindow(String s) {
         super(s);
@@ -76,7 +87,8 @@ public class GameWindow extends JFrame implements ActionListener {
         // These constraints are going to be added to the pieces/parts I
         // stuff into the "GridBag".
         // YOU CAN USE any type of constraints you like. Just make it work.
-
+    	filetoByteArray();
+    	
         ClickSwapper swapper = new ClickSwapper();
         addMouseListener(swapper);
 
@@ -97,7 +109,7 @@ public class GameWindow extends JFrame implements ActionListener {
         basic.gridx = 0;
         basic.gridy = 1;
         basic.anchor = GridBagConstraints.WEST;
-        SidePanel rightPanel = new SidePanel(0, swapper);
+        SidePanel rightPanel = new SidePanel(0, swapper, x1, x2, y1, y2, numLines, numberOfTiles, tileNumber);
         this.add(rightPanel, basic);
 
         // want to be able to add swapper outside of constructor call for panels
@@ -107,7 +119,7 @@ public class GameWindow extends JFrame implements ActionListener {
         basic.gridx = 2;
         basic.gridy = 1;
         basic.anchor = GridBagConstraints.EAST;
-        SidePanel leftPanel = new SidePanel(8, swapper);
+        SidePanel leftPanel = new SidePanel(8, swapper, x1, x2, y1, y2, numLines, numberOfTiles, tileNumber);
         this.add(leftPanel, basic);
 
         basic.gridx = 1;
@@ -149,4 +161,39 @@ public class GameWindow extends JFrame implements ActionListener {
 
         return;
     }
+	public void filetoByteArray() {
+		Path tpath = Paths.get("src\\default.mze");
+		byte[] data = null;
+		
+		try {
+			data = Files.readAllBytes(tpath);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		ByteBuffer buffer = ByteBuffer.wrap(data);
+		
+		numberOfTiles = buffer.getInt();
+		System.out.println(numberOfTiles + " 1");
+
+	       for(int i = 0; i < numberOfTiles; i++)  {
+	           tileNumber = buffer.getInt();
+	           System.out.print("Tile " + tileNumber + ": ");
+	           numLines[i] = buffer.getInt();
+	           System.out.println(numLines[i] + " lines");
+	           x1[tileNumber] = new float[numLines[i]];
+	           x2[tileNumber] = new float[numLines[i]];
+	           y1[tileNumber] = new float[numLines[i]];
+	           y2[tileNumber] = new float[numLines[i]];
+	           for(int j = 0; j < numLines[i]; j++) {
+	               x1[tileNumber][j] = buffer.getFloat();
+	               y1[tileNumber][j] = buffer.getFloat();
+	               x2[tileNumber][j] = buffer.getFloat();
+	               y2[tileNumber][j] = buffer.getFloat();
+	               
+	               System.out.println("\t" + j + ": " + x1[tileNumber][j] + " " + y1[tileNumber][j] + " " + x2[tileNumber][j] +" " + y2[tileNumber][j]);
+	           }
+	           
+	       }
+		}
 };
