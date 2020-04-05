@@ -159,7 +159,7 @@ public class GameWindow extends JFrame implements ActionListener {
 
         return;
     }
-	public void filetoByteArray() {
+	private void filetoByteArray() {
 		Path tpath = Paths.get("src\\default.mze");
 		byte[] data = null;
 		
