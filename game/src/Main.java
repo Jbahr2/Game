@@ -22,16 +22,13 @@
 
 import javax.swing.*;
 import java.awt.*;
-
 public class Main {
 
     // Probably should declare any buttons here
     public JButton lbutton, rbutton, mbutton;
-
     public static void main(String[] args) {
         // This is the play area
         GameWindow game = new GameWindow("Group H aMaze");
-
         // have to override the default layout to reposition things!!!!!!!
 
         game.setSize(new Dimension(900, 1000));
@@ -40,7 +37,7 @@ public class Main {
         // or do I make main() the game, manipulating a window?
         // Should GameWindow methods know what they store?
         // Answer is, have the "game" do it.
-
+        
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Use colors that are viewable on ALL DEVICES, Stay away from yellows, do
@@ -79,7 +76,6 @@ public class Main {
             System.out.println(e);
             System.exit(1);
         }
-
     }
 
 };

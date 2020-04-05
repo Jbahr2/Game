@@ -3,15 +3,14 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.io.*;
 public class Encode {
 	 float[] x1 = new float[16];
 	 float[] x2 = new float[16];
 	 float[] y1 = new float[16];
 	 float[] y2 = new float[16];
 	 int numberOfTiles, tileNumber, numLines;
-	public void filetoByteArray(String path) {
-		Path tpath = Paths.get(path);
+	public void filetoByteArray() {
+		Path tpath = Paths.get("src\\default.mze");
 		byte[] data = null;
 		
 		try {

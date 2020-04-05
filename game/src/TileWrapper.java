@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 public class TileWrapper extends JPanel {
 
     private Tile tile;
-
     private Color borderColor = new Color(100, 100, 0);
 
     public TileWrapper(ClickSwapper swapper) {
@@ -39,7 +38,6 @@ public class TileWrapper extends JPanel {
     public Tile getTile() {
         return tile;
     }
-
     public void removeTile() {
         if (tile != null) {
             remove(tile);
