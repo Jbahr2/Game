@@ -5,13 +5,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class FileDecoder {
-     private float[][] x1 = new float[16][];
-	 private float[][] x2 = new float[16][];
-	 private float[][] y1 = new float[16][];
-	 private float[][] y2 = new float[16][];
-	 private int numberOfTiles, tileNumber; 
-	 private int[] numLines = new int[16];
+     private float[][] x1;
+	 private float[][] x2;
+	 private float[][] y1;
+	 private float[][] y2;
+	 private int[] numLines;
 	private void filetoByteArray(String path) {
+		int numberOfTiles, tileNumber; 
 		Path tpath = Paths.get(path);
 		byte[] data = null;
 		
@@ -24,7 +24,11 @@ public class FileDecoder {
 		ByteBuffer buffer = ByteBuffer.wrap(data);
 		
 		numberOfTiles = buffer.getInt();
-
+			x1 = new float[numberOfTiles][];
+			x2 = new float[numberOfTiles][];
+			y1 = new float[numberOfTiles][];
+			y2 = new float[numberOfTiles][];
+			numLines = new int[numberOfTiles];
 	       for(int i = 0; i < numberOfTiles; i++)  {
 	           tileNumber = buffer.getInt();
 	           numLines[i] = buffer.getInt();
