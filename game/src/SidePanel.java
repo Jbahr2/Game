@@ -16,8 +16,8 @@ import javax.swing.JPanel;
 public class SidePanel extends JPanel {
 	private TileWrapper[] tileWrapper;
     public SidePanel(int side, ClickSwapper swapper, FileDecoder filedecoder) {
-    	//Splits up the tiles to each side, the 2nd part is checking if there is an uneven number of tiles and putting the extra tile on the 2nd side;
-    	int TileCount = filedecoder.getTileNum()/2 + (int)Math.ceil((filedecoder.getTileNum()%2)*side);
+    	//Splits up the tiles to each side, the 2nd part is checking if there is an uneven number of tiles and putting the extra tile on the right side;
+    	int TileCount = filedecoder.getTileNum()/2 + ((filedecoder.getTileNum()%2)*side);
     	int Ntile;
         GridBagLayout gbl = new GridBagLayout();
         setLayout(gbl);
