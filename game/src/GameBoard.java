@@ -31,7 +31,6 @@ public class GameBoard extends JPanel {
         for (int y = 0; y < (Gridnum + tileoverflowY); y++) {
             center.gridy = y;
             for (int x = 0; x < (Gridnum + (((y + 1 >= (Gridnum + tileoverflowY)) && (tileoverflowY > 0) && (tileoverflowX != 0)) ? (tileoverflowX - Gridnum) : 0)); x++) {
-            	System.out.println(x);
                 TileWrapper tileWrapper = new TileWrapper(swapper);
                 this.tileWrapper[y * Gridnum + x] = tileWrapper;
                 tileWrapper.InitializeTile(tileWrapper.getTile());
