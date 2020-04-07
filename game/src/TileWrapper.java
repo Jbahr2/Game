@@ -50,7 +50,16 @@ public class TileWrapper extends JPanel {
             updateBorder();
         }
     }
-    
+    public void resetTile() {
+    	System.out.println(tile);
+    	if(sTile != null) {
+    	remove(tile);
+    	tile = null;}
+    	if(sTile != null) {
+    	remove(sTile);
+    	sTile = null;
+		}
+    }
     public void setTile(Tile toSet) {
         if (toSet != null) {
             tile = toSet;

@@ -43,7 +43,7 @@ public class Main {
         // Use colors that are viewable on ALL DEVICES, Stay away from yellows, do
         // NOT use black or white.
         game.getContentPane().setBackground(new Color(119, 140, 163));
-        game.setUp();
+        game.setUp("input\\default.mze");
 
         // May or may not need this
 

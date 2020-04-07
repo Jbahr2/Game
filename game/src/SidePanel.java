@@ -15,10 +15,13 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class SidePanel extends JPanel {
 	private TileWrapper[] tileWrapper;
+	private Tile[] tile;
+	private int TileCount, Ntile, side;
     public SidePanel(int side, ClickSwapper swapper, FileDecoder filedecoder) {
     	//Splits up the tiles to each side, the 2nd part is checking if there is an uneven number of tiles and putting the extra tile on the right side;
-    	int TileCount = filedecoder.getTileNum()/2 + ((filedecoder.getTileNum()%2)*side);
-    	int Ntile;
+    	TileCount = filedecoder.getTileNum()/2 + ((filedecoder.getTileNum()%2)*side);
+    	tile = new Tile[TileCount];
+    	this.side = side;
         GridBagLayout gbl = new GridBagLayout();
         setLayout(gbl);
         tileWrapper = new TileWrapper[TileCount];
@@ -30,17 +33,31 @@ public class SidePanel extends JPanel {
             constraints.gridy = i;
             Ntile = side * TileCount + i;
             Tile tile = new Tile();
-            tile.SetTileInfo(filedecoder.getX1(Ntile), filedecoder.getX2(Ntile), filedecoder.getY1(Ntile),filedecoder.getY2(Ntile),filedecoder.getNumLines(Ntile));
             TileWrapper tileWrapper = new TileWrapper(swapper);
             tileWrapper.setTile(tile);
             tileWrapper.InitializeTile(tile);
             this.tileWrapper[i] = tileWrapper;
+            this.tile[i] = tile;
             add(tileWrapper, constraints);
         }
+        updatetiles(filedecoder);
+    }
+    public void updatetiles(FileDecoder filedecoder) 
+    {
+    	for (int i = 0; i < TileCount; i++) {
+    		Ntile = side * TileCount + i;
+    		tile[i].SetTileInfo(filedecoder.getX1(Ntile), filedecoder.getX2(Ntile), filedecoder.getY1(Ntile),filedecoder.getY2(Ntile),filedecoder.getNumLines(Ntile));
+    	}
     }
     public void resetside()
     {
-    	for(int i = 0; i < tileWrapper.length; i++)
+    	for(int i = 0; i < tileWrapper.length; i++) 
     		tileWrapper[i].setTile(tileWrapper[i].getStartingTile());
     }
+    public void newgame(FileDecoder filedecoder)
+    {
+    	resetside();
+    	updatetiles(filedecoder);
+    }
+    
 }
