@@ -42,7 +42,7 @@ public class SidePanel extends JPanel {
         }
         updatetiles(filedecoder);
     }
-    public void updatetiles(FileDecoder filedecoder) 
+    private void updatetiles(FileDecoder filedecoder) 
     {
     	for (int i = 0; i < TileCount; i++) {
     		Ntile = side * TileCount + i;
