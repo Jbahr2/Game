@@ -44,10 +44,4 @@ public class GameBoard extends JPanel {
     	for(int i = 0; i < tileWrapper.length; i++)
     		tileWrapper[i].removeTile();
     }
-    public void newgame() {
-    	for(int i = 0; i < tileWrapper.length; i++) {
-    		tileWrapper[i].removeTile();
-    		remove(tileWrapper[i]);
-    		}
-    }
 }
