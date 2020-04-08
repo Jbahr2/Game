@@ -1,3 +1,10 @@
+/* *
+ * Authored by Group H
+ * Class: Software Design 3011
+ * Last Edited: 04/07/2020
+ * 
+ * Description: Read raw data from file and convert them into readable text.
+ * */
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
