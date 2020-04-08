@@ -22,10 +22,12 @@
 
 import javax.swing.*;
 import java.awt.*;
+
 public class Main {
 
     // Probably should declare any buttons here
     public JButton lbutton, rbutton, mbutton;
+
     public static void main(String[] args) {
         // This is the play area
         GameWindow game = new GameWindow("Group H aMaze");
@@ -37,10 +39,11 @@ public class Main {
         // or do I make main() the game, manipulating a window?
         // Should GameWindow methods know what they store?
         // Answer is, have the "game" do it.
-        
+
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Use colors that are viewable on ALL DEVICES, Stay away from yellows, do
+        // Use colors that are viewable on ALL DEVICES, Stay away from yellows,
+        // do
         // NOT use black or white.
         game.getContentPane().setBackground(new Color(119, 140, 163));
         game.setUp("input\\default.mze");
@@ -49,13 +52,15 @@ public class Main {
 
         game.setVisible(true);
 
-        // You will HAVE to read some documentation and catch exceptions so get used
+        // You will HAVE to read some documentation and catch exceptions so get
+        // used
         // to it.
 
         try {
             // The 4 that are installed on Linux here
             // May have to test on Windows boxes to see what is there.
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+            UIManager.setLookAndFeel(
+                    "javax.swing.plaf.nimbus.NimbusLookAndFeel");
             // This is the "Java" or CrossPlatform version and the default
             // UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
             // Linux only
@@ -63,7 +68,8 @@ public class Main {
             // really old style Motif
             // UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
         } catch (UnsupportedLookAndFeelException e) {
-            //System.out.println("Error: Unsupported look and feel exception.");
+            // System.out.println("Error: Unsupported look and feel
+            // exception.");
             System.out.println(e);
             System.exit(1);
         } catch (ClassNotFoundException e) {

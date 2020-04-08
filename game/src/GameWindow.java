@@ -31,13 +31,14 @@ public class GameWindow extends JFrame implements ActionListener {
      */
     private SidePanel leftPanel, rightPanel;
     private GameBoard gameBoard;
+
     /**
      * Constructor sets the window name using super(), changes the layout, which
      * you really need to read up on, and maybe you can see why I chose this
      * one.
      *
      * @param s
-     */	 
+     */
 
     public GameWindow(String s) {
         super(s);
@@ -60,9 +61,9 @@ public class GameWindow extends JFrame implements ActionListener {
         if ("exit".equals(e.getActionCommand()))
             System.exit(0);
         if ("reset".equals(e.getActionCommand()))
-        	reset();
+            reset();
         if ("new".equals(e.getActionCommand()))
-        	 newgame("input\\default.mze");
+            newgame("input\\default.mze");
     }
 
     /**
@@ -76,11 +77,11 @@ public class GameWindow extends JFrame implements ActionListener {
         // These constraints are going to be added to the pieces/parts I
         // stuff into the "GridBag".
         // YOU CAN USE any type of constraints you like. Just make it work.
-    	FileDecoder filedecoder = new FileDecoder();
-    	filedecoder.readfile(path);
-    	
+        FileDecoder filedecoder = new FileDecoder();
+        filedecoder.readfile(path);
+
         ClickSwapper swapper = new ClickSwapper();
-    	addMouseListener(swapper);
+        addMouseListener(swapper);
 
         GridBagConstraints basic = new GridBagConstraints();
         basic.insets = new Insets(5, 5, 5, 5);
@@ -126,25 +127,26 @@ public class GameWindow extends JFrame implements ActionListener {
      * the gameBoard
      */
     private void reset() {
-    	leftPanel.resetside();
-    	rightPanel.resetside();
-    	gameBoard.resetboard();
+        leftPanel.resetside();
+        rightPanel.resetside();
+        gameBoard.resetboard();
     }
-    
-    private void newgame(String path) {
-    	FileDecoder filedecoder = new FileDecoder();
-    	filedecoder.readfile(path);
-    	leftPanel.newgame(filedecoder);
-    	rightPanel.newgame(filedecoder);
-    	gameBoard.resetboard();
-    	
-    }
-    public void addButtons(GridBagConstraints basic) {
-    	JPanel btnMenu = new JPanel();
 
-    	JButton newGameBtn = new JButton("New Game");
-    	JButton resetBtn = new JButton("Reset");
-    	JButton quitBtn = new JButton("Quit");
+    private void newgame(String path) {
+        FileDecoder filedecoder = new FileDecoder();
+        filedecoder.readfile(path);
+        leftPanel.newgame(filedecoder);
+        rightPanel.newgame(filedecoder);
+        gameBoard.resetboard();
+
+    }
+
+    public void addButtons(GridBagConstraints basic) {
+        JPanel btnMenu = new JPanel();
+
+        JButton newGameBtn = new JButton("New Game");
+        JButton resetBtn = new JButton("Reset");
+        JButton quitBtn = new JButton("Quit");
 
         btnMenu.setBackground(new Color(254, 211, 48, 255));
 
@@ -156,7 +158,7 @@ public class GameWindow extends JFrame implements ActionListener {
 
         quitBtn.setActionCommand("exit");
         quitBtn.addActionListener(this);
-        
+
         btnMenu.add(newGameBtn);
         btnMenu.add(resetBtn);
         btnMenu.add(quitBtn);
