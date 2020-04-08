@@ -138,7 +138,6 @@ public class GameWindow extends JFrame implements ActionListener {
         leftPanel.newgame(filedecoder);
         rightPanel.newgame(filedecoder);
         gameBoard.resetboard();
-
     }
 
     public void addButtons(GridBagConstraints basic) {

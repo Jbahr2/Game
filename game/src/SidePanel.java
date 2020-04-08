@@ -24,6 +24,7 @@ public class SidePanel extends JPanel {
         // side;
         TileCount = filedecoder.getTileNum() / 2
                 + ((filedecoder.getTileNum() % 2) * side);
+        
         tile = new Tile[TileCount];
         this.side = side;
         GridBagLayout gbl = new GridBagLayout();
