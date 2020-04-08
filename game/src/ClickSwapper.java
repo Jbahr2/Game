@@ -7,11 +7,9 @@
  * Description: Handles the mouse input and moving tiles.
  * */
 
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.BorderFactory;
 import javax.swing.SwingUtilities;
 
 class ClickSwapper extends MouseAdapter {
@@ -28,10 +26,15 @@ class ClickSwapper extends MouseAdapter {
             TileWrapper clickedTile = (TileWrapper) source;
 
             if (SwingUtilities.isLeftMouseButton(e)) { // moving tile
-                
-                if (selected == null && clickedTile.hasTile()) { // selecting a new tile
+
+                if (selected == null && clickedTile.hasTile()) { // selecting a
+                                                                 // new tile
                     select(clickedTile);
-                } else if (selected != null && !clickedTile.hasTile()) { // moving to an empty tile
+                } else if (selected != null && !clickedTile.hasTile()) { // moving
+                                                                         // to
+                                                                         // an
+                                                                         // empty
+                                                                         // tile
                     moveTile(selected, clickedTile);
                     deselct();
                 } else {
@@ -43,7 +46,7 @@ class ClickSwapper extends MouseAdapter {
         }
     }
 
-    private void moveTile(TileWrapper tile1, TileWrapper tile2) {
+    public void moveTile(TileWrapper tile1, TileWrapper tile2) {
         tile2.setTile(tile1.getTile());
         tile1.removeTile();
     }

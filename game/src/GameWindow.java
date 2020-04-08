@@ -29,7 +29,8 @@ public class GameWindow extends JFrame implements ActionListener {
      * This is so I can try changing the starting point easily. Can certainly be
      * left out altogether.
      */
-    private int startAt = 1;
+    private SidePanel leftPanel, rightPanel;
+    private GameBoard gameBoard;
 
     /**
      * Constructor sets the window name using super(), changes the layout, which
@@ -59,23 +60,25 @@ public class GameWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if ("exit".equals(e.getActionCommand()))
             System.exit(0);
-        // if ("reset".equals(e.getActionCommand()))
-
-        // if ("new".equals(e.getActionCommand()))
-
+        if ("reset".equals(e.getActionCommand()))
+            reset();
+        /*if ("new".equals(e.getActionCommand()))
+            newgame("input\\default.mze");*/
     }
 
     /**
-     * Establishes the inital board
+     * Establishes the initial board
      */
 
-    public void setUp() {
+    public void setUp(String path) {
         // actually create the array for elements, make sure it is big enough
 
         // Need to play around with the dimensions and the gridx/y values
         // These constraints are going to be added to the pieces/parts I
         // stuff into the "GridBag".
         // YOU CAN USE any type of constraints you like. Just make it work.
+        FileDecoder filedecoder = new FileDecoder();
+        filedecoder.readfile(path);
 
         ClickSwapper swapper = new ClickSwapper();
         addMouseListener(swapper);
@@ -97,7 +100,7 @@ public class GameWindow extends JFrame implements ActionListener {
         basic.gridx = 0;
         basic.gridy = 1;
         basic.anchor = GridBagConstraints.WEST;
-        SidePanel rightPanel = new SidePanel(0, swapper);
+        rightPanel = new SidePanel(0, swapper, filedecoder);
         this.add(rightPanel, basic);
 
         // want to be able to add swapper outside of constructor call for panels
@@ -107,12 +110,12 @@ public class GameWindow extends JFrame implements ActionListener {
         basic.gridx = 2;
         basic.gridy = 1;
         basic.anchor = GridBagConstraints.EAST;
-        SidePanel leftPanel = new SidePanel(8, swapper);
+        leftPanel = new SidePanel(1, swapper, filedecoder);
         this.add(leftPanel, basic);
 
         basic.gridx = 1;
         basic.gridy = 1;
-        GameBoard gameBoard = new GameBoard(swapper);
+        gameBoard = new GameBoard(swapper, filedecoder);
         add(gameBoard, basic);
 
         return;
@@ -123,6 +126,19 @@ public class GameWindow extends JFrame implements ActionListener {
      * Used by setUp() to configure the buttons on a button bar and add it to
      * the gameBoard
      */
+    private void reset() {
+        leftPanel.resetside();
+        rightPanel.resetside();
+        gameBoard.resetboard();
+    }
+
+    /*private void newgame(String path) {
+        FileDecoder filedecoder = new FileDecoder();
+        filedecoder.readfile(path);
+        leftPanel.newgame(filedecoder);
+        rightPanel.newgame(filedecoder);
+        gameBoard.resetboard();
+    }*/
 
     public void addButtons(GridBagConstraints basic) {
         JPanel btnMenu = new JPanel();
@@ -149,4 +165,5 @@ public class GameWindow extends JFrame implements ActionListener {
 
         return;
     }
+
 };

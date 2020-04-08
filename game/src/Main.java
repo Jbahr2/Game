@@ -31,7 +31,6 @@ public class Main {
     public static void main(String[] args) {
         // This is the play area
         GameWindow game = new GameWindow("Group H aMaze");
-
         // have to override the default layout to reposition things!!!!!!!
 
         game.setSize(new Dimension(900, 1000));
@@ -43,22 +42,25 @@ public class Main {
 
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Use colors that are viewable on ALL DEVICES, Stay away from yellows, do
+        // Use colors that are viewable on ALL DEVICES, Stay away from yellows,
+        // do
         // NOT use black or white.
         game.getContentPane().setBackground(new Color(119, 140, 163));
-        game.setUp();
+        game.setUp("input\\default.mze");
 
         // May or may not need this
 
         game.setVisible(true);
 
-        // You will HAVE to read some documentation and catch exceptions so get used
+        // You will HAVE to read some documentation and catch exceptions so get
+        // used
         // to it.
 
         try {
             // The 4 that are installed on Linux here
             // May have to test on Windows boxes to see what is there.
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+            UIManager.setLookAndFeel(
+                    "javax.swing.plaf.nimbus.NimbusLookAndFeel");
             // This is the "Java" or CrossPlatform version and the default
             // UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
             // Linux only
@@ -66,7 +68,8 @@ public class Main {
             // really old style Motif
             // UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
         } catch (UnsupportedLookAndFeelException e) {
-            //System.out.println("Error: Unsupported look and feel exception.");
+            // System.out.println("Error: Unsupported look and feel
+            // exception.");
             System.out.println(e);
             System.exit(1);
         } catch (ClassNotFoundException e) {
@@ -79,7 +82,6 @@ public class Main {
             System.out.println(e);
             System.exit(1);
         }
-
     }
 
 };
