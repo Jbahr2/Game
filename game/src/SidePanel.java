@@ -59,7 +59,10 @@ public class SidePanel extends JPanel {
 
     public void resetside() {
         for (int i = 0; i < tileWrapper.length; i++)
+        {
             tileWrapper[i].setTile(tileWrapper[i].getStartingTile());
+            tileWrapper[i].repaint();
+        }
     }
 
     /*public void newgame(FileDecoder filedecoder) {
