@@ -62,8 +62,8 @@ public class GameWindow extends JFrame implements ActionListener {
             System.exit(0);
         if ("reset".equals(e.getActionCommand()))
             reset();
-        if ("new".equals(e.getActionCommand()))
-            newgame("input\\default.mze");
+        /*if ("new".equals(e.getActionCommand()))
+            newgame("input\\default.mze");*/
     }
 
     /**
@@ -132,13 +132,13 @@ public class GameWindow extends JFrame implements ActionListener {
         gameBoard.resetboard();
     }
 
-    private void newgame(String path) {
+    /*private void newgame(String path) {
         FileDecoder filedecoder = new FileDecoder();
         filedecoder.readfile(path);
         leftPanel.newgame(filedecoder);
         rightPanel.newgame(filedecoder);
         gameBoard.resetboard();
-    }
+    }*/
 
     public void addButtons(GridBagConstraints basic) {
         JPanel btnMenu = new JPanel();

@@ -62,9 +62,9 @@ public class SidePanel extends JPanel {
             tileWrapper[i].setTile(tileWrapper[i].getStartingTile());
     }
 
-    public void newgame(FileDecoder filedecoder) {
+    /*public void newgame(FileDecoder filedecoder) {
         resetside();
         updatetiles(filedecoder);
-    }
+    }*/
 
 }
