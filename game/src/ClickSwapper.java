@@ -37,9 +37,10 @@ class ClickSwapper extends MouseAdapter {
                                                                          // tile
                     moveTile(selected, clickedTile);
                     deselct();
-                } else {
+                } else if (selected != null && clickedTile == selected)
+                    selected.rotatetile();
+                else
                     deselct();
-                }
             }
         } else {
             deselct();

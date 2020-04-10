@@ -88,7 +88,12 @@ public class TileWrapper extends JPanel {
     public void setAsUnselected() {
         updateBorder();
     }
-
+    public void rotatetile() {
+     tile.rotateTile();   
+    }
+    public void resetRotation() {
+        tile.resetRotation();
+    }
     private void updateBorder() {
         if (hasTile()) {
             setBorder(BorderFactory.createEmptyBorder());
