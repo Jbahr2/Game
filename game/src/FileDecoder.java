@@ -29,6 +29,7 @@ public class FileDecoder {
             e.printStackTrace();
         }
 
+        
         ByteBuffer buffer = ByteBuffer.wrap(data);
         numberOfTiles = buffer.getInt();
         x1 = new float[numberOfTiles][];
