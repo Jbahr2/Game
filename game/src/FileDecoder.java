@@ -8,9 +8,13 @@
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
+
+import javax.swing.JOptionPane;
+
 import java.util.*;
 
 public class FileDecoder {
@@ -18,16 +22,10 @@ public class FileDecoder {
     private int[] numLines;
     private int numberOfTiles;
     List<Integer> ranTile = new ArrayList<Integer>();
-    private void filetoByteArray(String path) {
+    private void filetoByteArray(String path) throws IOException, InvalidPathException {
         int tileNumber;
         Path tpath = Paths.get(path);
-        byte[] data = null;
-
-        try {
-            data = Files.readAllBytes(tpath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        byte[] data = Files.readAllBytes(tpath);
 
         
         ByteBuffer buffer = ByteBuffer.wrap(data);
@@ -52,14 +50,14 @@ public class FileDecoder {
                 y2[tileNumber][j] = buffer.getFloat();
             }
         }
-        //Shuffles Tiles around randomly in array using Fisher–Yates shuffle algorithm
+        //Shuffles Tiles around randomly in array using Fisherï¿½Yates shuffle algorithm
         for(int i = ranTile.size() - 1; i > 0; i--){
             int j = (int)(Math.random() * (i + 1));
             Collections.swap(ranTile,i,j);
         }
     }
 
-    public void readfile(String path) {
+    public void readfile(String path) throws InvalidPathException, IOException {
         filetoByteArray(path);
     }
 

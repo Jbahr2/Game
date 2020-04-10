@@ -35,26 +35,12 @@ public class Main {
 
         game.setSize(new Dimension(900, 1000));
 
-        // So the debate here was, do I make the GameWindow object the game
-        // or do I make main() the game, manipulating a window?
-        // Should GameWindow methods know what they store?
-        // Answer is, have the "game" do it.
-
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Use colors that are viewable on ALL DEVICES, Stay away from yellows,
-        // do
-        // NOT use black or white.
         game.getContentPane().setBackground(new Color(119, 140, 163));
-        game.setUp("input\\default.mze");
-
-        // May or may not need this
+        game.setUp("input/default.mze");
 
         game.setVisible(true);
-
-        // You will HAVE to read some documentation and catch exceptions so get
-        // used
-        // to it.
 
         try {
             // The 4 that are installed on Linux here

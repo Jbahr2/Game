@@ -17,6 +17,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.nio.file.InvalidPathException;
 
 public class GameWindow extends JFrame implements ActionListener {
     /**
@@ -78,7 +80,8 @@ public class GameWindow extends JFrame implements ActionListener {
         // stuff into the "GridBag".
         // YOU CAN USE any type of constraints you like. Just make it work.
         FileDecoder filedecoder = new FileDecoder();
-        filedecoder.readfile(path);
+        tryUpdateFiledecoder(filedecoder, path);
+
 
         ClickSwapper swapper = new ClickSwapper();
         addMouseListener(swapper);
@@ -122,6 +125,18 @@ public class GameWindow extends JFrame implements ActionListener {
 
     }
 
+    private void tryUpdateFiledecoder(FileDecoder filedecoder, String path) {
+        try {
+            filedecoder.readfile(path);
+        } catch (InvalidPathException e) {
+            JOptionPane.showMessageDialog(this, "Failed to find file");
+            System.exit(ERROR);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Failed to read file");
+            System.exit(ERROR);
+        }
+    }
+
     /**
      * Used by setUp() to configure the buttons on a button bar and add it to
      * the gameBoard
@@ -134,7 +149,7 @@ public class GameWindow extends JFrame implements ActionListener {
 
     private void newgame(String path) {
         FileDecoder filedecoder = new FileDecoder();
-        filedecoder.readfile(path);
+        tryUpdateFiledecoder(filedecoder, path);
         leftPanel.newgame(filedecoder);
         rightPanel.newgame(filedecoder);
         gameBoard.resetboard();
@@ -164,6 +179,10 @@ public class GameWindow extends JFrame implements ActionListener {
         this.add(btnMenu, basic);
 
         return;
+    }
+    
+    private void updateFiledecoder() {
+        
     }
 
 };
