@@ -180,9 +180,6 @@ public class GameWindow extends JFrame implements ActionListener {
 
         return;
     }
-    
-    private void updateFiledecoder() {
-        
-    }
+
 
 };
