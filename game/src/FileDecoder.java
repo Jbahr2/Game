@@ -51,8 +51,9 @@ public class FileDecoder {
                 y2[tileNumber][j] = buffer.getFloat();
             }
         }
+        //Shuffles Tiles around randomly in array using Fisher–Yates shuffle algorithm
         for(int i = ranTile.size() - 1; i > 0; i--){
-            int j = (int)Math.floor(Math.random() * (i + 1));
+            int j = (int)(Math.random() * (i + 1));
             Collections.swap(ranTile,i,j);
         }
     }
