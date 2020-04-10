@@ -19,6 +19,7 @@ public class Tile extends JPanel {
     private float x1[], x2[], y1[], y2[];
     private int numLines;
     private double degree, InitialDegree;
+
     public Tile() {
         super();
         setOpaque(true);
@@ -36,33 +37,44 @@ public class Tile extends JPanel {
         this.y1 = y1;
         this.y2 = y2;
         this.numLines = numLines;
-        degree = ((int)(Math.random() * 4)) * 90;
+        degree = ((int) (Math.random() * 4)) * 90;
         InitialDegree = degree;
     }
+
     public void rotateTile() {
         degree = (degree + 90) % 360;
         this.repaint();
     }
+
     public void resetRotation() {
         degree = InitialDegree;
         this.repaint();
     }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D G2D = (Graphics2D) g;
         G2D.setColor(Color.BLACK);
         G2D.setStroke(new BasicStroke(2.5f));
-        double centerx = this.getX() + this.getWidth()/2;
-        double centery = this.getY() + this.getHeight()/2;
-        float x,y,xx,yy;
+        double centerx = this.getX() + this.getWidth() / 2;
+        double centery = this.getY() + this.getHeight() / 2;
+        float x, y, xx, yy;
         for (int i = 0; i < numLines; i++) {
-            //Calculates rotation of maze around the center axis of the tile. 
-            x = (float)(((x1[i] - centerx)* Math.cos(Math.toRadians(degree)) - (y1[i] - centery)* Math.sin(Math.toRadians(degree))) + centerx);
-            y = (float)((((y1[i] - centery)* Math.cos(Math.toRadians(degree)) + (x1[i] - centerx)* Math.sin(Math.toRadians(degree)))) + centery);
-            xx = (float)((((x2[i] - centerx)* Math.cos(Math.toRadians(degree)) - (y2[i] - centery)* Math.sin(Math.toRadians(degree)))) + centerx);
-            yy = (float)((((y2[i] - centery)* Math.cos(Math.toRadians(degree)) + (x2[i] - centerx)* Math.sin(Math.toRadians(degree)))) + centery);
+            // Calculates rotation of maze around the center axis of the tile.
+            x = (float) (((x1[i] - centerx) * Math.cos(Math.toRadians(degree))
+                    - (y1[i] - centery) * Math.sin(Math.toRadians(degree)))
+                    + centerx);
+            y = (float) ((((y1[i] - centery) * Math.cos(Math.toRadians(degree))
+                    + (x1[i] - centerx) * Math.sin(Math.toRadians(degree))))
+                    + centery);
+            xx = (float) ((((x2[i] - centerx) * Math.cos(Math.toRadians(degree))
+                    - (y2[i] - centery) * Math.sin(Math.toRadians(degree))))
+                    + centerx);
+            yy = (float) ((((y2[i] - centery) * Math.cos(Math.toRadians(degree))
+                    + (x2[i] - centerx) * Math.sin(Math.toRadians(degree))))
+                    + centery);
             G2D.draw(new Line2D.Float(x, y, xx, yy));
         }
-     }
+    }
 }
