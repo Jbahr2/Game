@@ -10,12 +10,14 @@ import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.*;
 
 public class FileDecoder {
     private float[][] x1, x2, y1, y2;
     private int[] numLines;
     private int numberOfTiles;
-
+    List<Integer> ranTile = new ArrayList<Integer>();
     private void filetoByteArray(String path) {
         int tileNumber;
         Path tpath = Paths.get(path);
@@ -28,7 +30,6 @@ public class FileDecoder {
         }
 
         ByteBuffer buffer = ByteBuffer.wrap(data);
-
         numberOfTiles = buffer.getInt();
         x1 = new float[numberOfTiles][];
         x2 = new float[numberOfTiles][];
@@ -42,13 +43,17 @@ public class FileDecoder {
             x2[tileNumber] = new float[numLines[i]];
             y1[tileNumber] = new float[numLines[i]];
             y2[tileNumber] = new float[numLines[i]];
+            ranTile.add(tileNumber);
             for (int j = 0; j < numLines[i]; j++) {
                 x1[tileNumber][j] = buffer.getFloat();
                 y1[tileNumber][j] = buffer.getFloat();
                 x2[tileNumber][j] = buffer.getFloat();
                 y2[tileNumber][j] = buffer.getFloat();
             }
-
+        }
+        for(int i = ranTile.size() - 1; i > 0; i--){
+            int j = (int)Math.floor(Math.random() * (i + 1));
+            Collections.swap(ranTile,i,j);
         }
     }
 
@@ -75,7 +80,9 @@ public class FileDecoder {
     public int getNumLines(int i) {
         return numLines[i];
     }
-
+    public int getRanTile(int i) {
+        return ranTile.get(i);
+    }
     public int getTileNum() {
         return numberOfTiles;
     }

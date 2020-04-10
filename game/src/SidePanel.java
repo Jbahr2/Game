@@ -50,7 +50,7 @@ public class SidePanel extends JPanel {
 
     private void updatetiles(FileDecoder filedecoder) {
         for (int i = 0; i < TileCount; i++) {
-            Ntile = side * TileCount + i;
+            Ntile = filedecoder.getRanTile(side * TileCount + i);
             tile[i].SetTileInfo(filedecoder.getX1(Ntile),
                     filedecoder.getX2(Ntile), filedecoder.getY1(Ntile),
                     filedecoder.getY2(Ntile), filedecoder.getNumLines(Ntile));
