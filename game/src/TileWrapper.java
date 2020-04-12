@@ -97,7 +97,7 @@ public class TileWrapper extends JPanel {
         tile.setDegree(filedecoder.getDegree(tile.getTilenum()));
     }
 
-    public void setTileNum(int Ntile) {
+    public void setTile(int Ntile) {
         tile.setTilenum(Ntile);
     }
 

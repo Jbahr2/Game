@@ -46,8 +46,7 @@ public class SidePanel extends JPanel {
 
     private void updateTiles(FileDecoder filedecoder) {
         for (int i = 0; i < TileCount; i++) {
-            tileWrapper[i]
-                    .setTileNum(filedecoder.getRanTile(side * TileCount + i));
+            tileWrapper[i].setTile(filedecoder.getTile(side * TileCount + i));
             tileWrapper[i].updateTile(filedecoder);
             tileWrapper[i].resetRotation(filedecoder);
         }

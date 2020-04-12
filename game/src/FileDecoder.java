@@ -88,7 +88,7 @@ public class FileDecoder {
         return numLines[i];
     }
 
-    public int getRanTile(int i) {
+    public int getTile(int i) {
         return ranTile.get(i);
     }
 
