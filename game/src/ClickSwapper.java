@@ -26,24 +26,24 @@ class ClickSwapper extends MouseAdapter {
             TileWrapper clickedTile = (TileWrapper) source;
 
             if (SwingUtilities.isLeftMouseButton(e)) { // moving tile
-
-                if (selected == null && clickedTile.hasTile()) { // selecting a
-                                                                 // new tile
+                if (selected == null && clickedTile.hasTile()) {
+                    // selecting a new tile
                     select(clickedTile);
-                } else if (selected != null && !clickedTile.hasTile()) { // moving
-                                                                         // to
-                                                                         // an
-                                                                         // empty
-                                                                         // tile
+                } else if (selected != null && !clickedTile.hasTile()) {
+                    // moving to an empty tile
                     moveTile(selected, clickedTile);
                     deselct();
-                } else if (selected != null && clickedTile == selected)
-                    selected.rotatetile();
-                else
+                } else if (selected == clickedTile) {
                     deselct();
+                } else {
+                    illegalMove();
+                }
+            } else if (SwingUtilities.isRightMouseButton(e)
+                    && clickedTile.hasTile()) {
+                clickedTile.rotatetile();
             }
         } else {
-            deselct();
+            illegalMove();
         }
     }
 
@@ -57,6 +57,11 @@ class ClickSwapper extends MouseAdapter {
             selected.setAsUnselected();
             selected = null;
         }
+    }
+
+    private void illegalMove() {
+        if (selected != null)
+            selected.illegalBorder();
     }
 
     private void select(TileWrapper tile) {

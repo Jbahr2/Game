@@ -88,12 +88,31 @@ public class TileWrapper extends JPanel {
     public void setAsUnselected() {
         updateBorder();
     }
+
     public void rotatetile() {
-     tile.rotateTile();   
+        tile.setDegree((tile.getDegree() + 90) % 360);
     }
-    public void resetRotation() {
-        tile.resetRotation();
+
+    public void resetRotation(FileDecoder filedecoder) {
+        tile.setDegree(filedecoder.getDegree(tile.getTilenum()));
     }
+
+    public void setTileNum(int Ntile) {
+        tile.setTilenum(Ntile);
+    }
+
+    public void updateTile(FileDecoder filedecoder) {
+        tile.SetTileInfo(filedecoder.getX1(tile.getTilenum()),
+                filedecoder.getX2(tile.getTilenum()),
+                filedecoder.getY1(tile.getTilenum()),
+                filedecoder.getY2(tile.getTilenum()),
+                filedecoder.getNumLines(tile.getTilenum()));
+    }
+
+    public void illegalBorder() {
+        setBorder(BorderFactory.createLineBorder((new Color(250, 0, 0)), 3));
+    }
+
     private void updateBorder() {
         if (hasTile()) {
             setBorder(BorderFactory.createEmptyBorder());

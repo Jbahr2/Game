@@ -17,8 +17,7 @@ import javax.swing.*;
 public class Tile extends JPanel {
 
     private float x1[], x2[], y1[], y2[];
-    private int numLines;
-    private double degree, InitialDegree;
+    private int numLines, degree, tilenumber;
 
     public Tile() {
         super();
@@ -37,18 +36,23 @@ public class Tile extends JPanel {
         this.y1 = y1;
         this.y2 = y2;
         this.numLines = numLines;
-        degree = ((int) (Math.random() * 4)) * 90;
-        InitialDegree = degree;
     }
 
-    public void rotateTile() {
-        degree = (degree + 90) % 360;
+    public void setDegree(int degree) {
+        this.degree = degree;
         this.repaint();
     }
 
-    public void resetRotation() {
-        degree = InitialDegree;
-        this.repaint();
+    public int getDegree() {
+        return degree;
+    }
+
+    public void setTilenum(int tilenumber) {
+        this.tilenumber = tilenumber;
+    }
+
+    public int getTilenum() {
+        return tilenumber;
     }
 
     @Override

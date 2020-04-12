@@ -33,6 +33,7 @@ public class GameWindow extends JFrame implements ActionListener {
      */
     private SidePanel leftPanel, rightPanel;
     private GameBoard gameBoard;
+    private FileDecoder filedecoder;
 
     /**
      * Constructor sets the window name using super(), changes the layout, which
@@ -64,8 +65,8 @@ public class GameWindow extends JFrame implements ActionListener {
             System.exit(0);
         if ("reset".equals(e.getActionCommand()))
             reset();
-        if ("new".equals(e.getActionCommand()))     
-            newgame("input\\default.mze");
+        if ("new".equals(e.getActionCommand()))
+            newgame("input/default.mze");
     }
 
     /**
@@ -81,7 +82,7 @@ public class GameWindow extends JFrame implements ActionListener {
         // YOU CAN USE any type of constraints you like. Just make it work.
         FileDecoder filedecoder = new FileDecoder();
         tryUpdateFiledecoder(filedecoder, path);
-
+        this.filedecoder = filedecoder;
 
         ClickSwapper swapper = new ClickSwapper();
         addMouseListener(swapper);
@@ -142,14 +143,15 @@ public class GameWindow extends JFrame implements ActionListener {
      * the gameBoard
      */
     private void reset() {
-        leftPanel.resetside();
-        rightPanel.resetside();
+        leftPanel.resetside(filedecoder);
+        rightPanel.resetside(filedecoder);
         gameBoard.resetboard();
     }
 
     private void newgame(String path) {
         FileDecoder filedecoder = new FileDecoder();
         tryUpdateFiledecoder(filedecoder, path);
+        this.filedecoder = filedecoder;
         leftPanel.newgame(filedecoder);
         rightPanel.newgame(filedecoder);
         gameBoard.resetboard();
@@ -180,6 +182,5 @@ public class GameWindow extends JFrame implements ActionListener {
 
         return;
     }
-
 
 };

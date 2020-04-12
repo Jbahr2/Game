@@ -15,8 +15,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class SidePanel extends JPanel {
     private TileWrapper[] tileWrapper;
-    private Tile[] tile;
-    private int TileCount, Ntile, side;
+    private int TileCount, side;
 
     public SidePanel(int side, ClickSwapper swapper, FileDecoder filedecoder) {
         // Splits up the tiles to each side, the 2nd part is checking if there
@@ -24,8 +23,7 @@ public class SidePanel extends JPanel {
         // side;
         TileCount = filedecoder.getTileNum() / 2
                 + ((filedecoder.getTileNum() % 2) * side);
-        
-        tile = new Tile[TileCount];
+
         this.side = side;
         GridBagLayout gbl = new GridBagLayout();
         setLayout(gbl);
@@ -36,37 +34,35 @@ public class SidePanel extends JPanel {
         // initialize tiles for each player
         for (int i = 0; i < TileCount; i++) {
             constraints.gridy = i;
-            Ntile = side * TileCount + i;
             Tile tile = new Tile();
             TileWrapper tileWrapper = new TileWrapper(swapper);
             tileWrapper.setTile(tile);
             tileWrapper.InitializeTile(tile);
             this.tileWrapper[i] = tileWrapper;
-            this.tile[i] = tile;
             add(tileWrapper, constraints);
         }
-        updatetiles(filedecoder);
+        updateTiles(filedecoder);
     }
 
-    private void updatetiles(FileDecoder filedecoder) {
+    private void updateTiles(FileDecoder filedecoder) {
         for (int i = 0; i < TileCount; i++) {
-            Ntile = filedecoder.getRanTile(side * TileCount + i);
-            tile[i].SetTileInfo(filedecoder.getX1(Ntile),
-                    filedecoder.getX2(Ntile), filedecoder.getY1(Ntile),
-                    filedecoder.getY2(Ntile), filedecoder.getNumLines(Ntile));
+            tileWrapper[i]
+                    .setTileNum(filedecoder.getRanTile(side * TileCount + i));
+            tileWrapper[i].updateTile(filedecoder);
+            tileWrapper[i].resetRotation(filedecoder);
         }
     }
 
-    public void resetside() {
-        for (int i = 0; i < tileWrapper.length; i++)
-        {
+    public void resetside(FileDecoder filedecoder) {
+        for (int i = 0; i < tileWrapper.length; i++) {
             tileWrapper[i].setTile(tileWrapper[i].getStartingTile());
-            tileWrapper[i].resetRotation();
+            tileWrapper[i].resetRotation(filedecoder);
         }
     }
+
     public void newgame(FileDecoder filedecoder) {
-        resetside();
-        updatetiles(filedecoder);
+        resetside(filedecoder);
+        updateTiles(filedecoder);
     }
 
 }
