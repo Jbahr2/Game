@@ -90,7 +90,7 @@ public class TileWrapper extends JPanel {
     }
 
     public void rotatetile() {
-        tile.setDegree((tile.getDegree() + 90) % 360);
+        tile.setDegree((tile.getDegree() + 1) % 4);
     }
 
     public void resetRotation(FileDecoder filedecoder) {
@@ -102,11 +102,7 @@ public class TileWrapper extends JPanel {
     }
 
     public void updateTile(FileDecoder filedecoder) {
-        tile.SetTileInfo(filedecoder.getX1(tile.getTilenum()),
-                filedecoder.getX2(tile.getTilenum()),
-                filedecoder.getY1(tile.getTilenum()),
-                filedecoder.getY2(tile.getTilenum()),
-                filedecoder.getNumLines(tile.getTilenum()));
+        tile.SetTileInfo(filedecoder.getLines(tile.getTilenum()));
     }
 
     public void illegalBorder() {
