@@ -6,6 +6,7 @@
  * 
  * Description: Read raw data from file and convert them into readable text.
  * */
+import java.awt.FontFormatException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
@@ -14,80 +15,79 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 
+import javax.annotation.processing.FilerException;
+import javax.swing.JOptionPane;
+
 import java.util.*;
 
 public class FileDecoder {
-    private float[][][] lines;
-    private int[] numLines, degree, sdegree;
-    private int numberOfTiles;
-    List<Integer> ranTileID = new ArrayList<Integer>();
 
-    private void filetoByteArray(String path)
-            throws IOException, InvalidPathException {
+    private Map<Integer, Tile> tiles;
+
+    public void readFile(String path) throws InvalidPathException, IOException {
+
+        tiles = new HashMap<Integer, Tile>();
 
         Path tpath = Paths.get(path);
         byte[] data = Files.readAllBytes(tpath);
 
         ByteBuffer buffer = ByteBuffer.wrap(data);
-        numberOfTiles = buffer.getInt();
-        lines = new float[numberOfTiles][][];
 
-        numLines = new int[numberOfTiles];
-        degree = new int[numberOfTiles];
-        sdegree = new int[numberOfTiles];
+        // not played is -889274641
+        // played -889266451
+        int playedHex = buffer.getInt();
+        boolean played;
+        if (playedHex == -889274641) {
+            played = false;
+        } else if (playedHex == -889266451) {
+            played = true;
+        } else {
+            throw new FilerException("File type incorrect");
+        }
         
-        for (int i = 0; i < numberOfTiles; i++) {
-            int tileNumber = buffer.getInt(); // not yet used
-            
-            numLines[i] = buffer.getInt();
-            lines[tileNumber] = new float[numLines[i]][4];
+        int numberOfTiles = buffer.getInt();
 
-            ranTileID.add(tileNumber);
-            degree[i] = (int) (Math.random() * 4);
-            sdegree = degree;
-            
-            for (int j = 0; j < numLines[i]; j++) {
-                lines[tileNumber][j][0] = buffer.getFloat();
-                lines[tileNumber][j][1] = buffer.getFloat();
-                lines[tileNumber][j][2] = buffer.getFloat();
-                lines[tileNumber][j][3] = buffer.getFloat();
+        // create bin of IDs and rotations to grab from for randomization
+        ArrayList<Integer> randomIDs = new ArrayList<Integer>(); 
+        ArrayList<Integer> randomRotations = new ArrayList<Integer>(); 
+
+        for (int i = 0; i < numberOfTiles; i++) {
+            randomIDs.add(i);
+            randomRotations.add(i % 4);
+        }
+        Collections.shuffle(randomIDs); 
+        Collections.shuffle(randomRotations); 
+
+
+        for (int i = 0; i < numberOfTiles; i++) {
+            int tileID = buffer.getInt();
+            int degree = buffer.getInt();
+
+            int numLines = buffer.getInt();
+
+            float[][] lines = new float[numLines][4];
+
+            for (int j = 0; j < numLines; j++) {
+                for (int k = 0; k < 4; k++) {
+                    lines[j][k] = buffer.getFloat();
+                }
+            }
+
+            if (played) {
+                tiles.put(tileID, new Tile(lines, degree, degree, tileID));
+            } else {
+                tileID = randomIDs.remove(0);
+                degree = randomRotations.remove(0);
+                tiles.put(tileID, new Tile(lines, degree, degree, tileID));
             }
         }
-        
-        // Shuffles Tiles around randomly in array using FisherYates shuffle
-        // algorithm
-        for (int i = ranTileID.size() - 1; i > 0; i--) {
-            int j = (int) (Math.random() * (i + 1));
-            Collections.swap(ranTileID, i, j);
-        }
     }
 
-    public void readFile(String path) throws InvalidPathException, IOException {
-        filetoByteArray(path);
+    public Tile getTile(int i) {
+        return tiles.get(i);
     }
 
-    public float[][] getLines(int i) {
-        return lines[i];
-    }
-
-
-    public int getDegree(int i) {
-        return degree[i];
-    }
-    
-    public int getInitialDegree(int i) {
-        return sdegree[i];
-    }
-
-    public int getNumLines(int i) {
-        return numLines[i];
-    }
-
-    public int getTile(int i) {
-        return ranTileID.get(i);
-    }
-
-    public int getTileNum() {
-        return numberOfTiles;
+    public int getTilesSize() {
+        return tiles.size();
     }
 }

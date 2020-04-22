@@ -18,6 +18,7 @@ import javax.swing.filechooser.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 
@@ -28,14 +29,10 @@ public class GameWindow extends JFrame implements ActionListener {
      */
     public static final long serialVersionUID = 1;
 
-    
-    
     private SidePanel leftPanel, rightPanel;
     private GameBoard gameBoard;
     private ClickSwapper swapper;
 
-    
-    
     public GameWindow(String s) {
         super(s);
         GridBagLayout gbl = new GridBagLayout();
@@ -55,64 +52,19 @@ public class GameWindow extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if ("exit".equals(e.getActionCommand())) {
-            System.exit(0);
+            quit();
         }
         if ("reset".equals(e.getActionCommand())) {
             reset();
         }
         if ("file".equals(e.getActionCommand())) {
-
-            // first ask to load or save
-            // 0 = load, 1 = save
-            Object[] options = { "Load", "Save" };
-            int decision = JOptionPane.showOptionDialog(this,
-                    "Select an action", "File select",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                    null, // do not use a custom Icon
-                    options, // the titles of buttons
-                    options[0]); // default button title
-
-            if (decision != JOptionPane.CLOSED_OPTION) {
-
-                JFileChooser fileChooser = new JFileChooser(
-                        System.getProperty("user.dir"));
-
-                if (decision == 0) { // loading file
-                    int r = fileChooser.showOpenDialog(null);
-
-                    // if the user selects a file
-                    if (r == JFileChooser.APPROVE_OPTION) {
-                        String filePath = fileChooser.getSelectedFile()
-                                .getAbsolutePath();
-
-                        // need to check if current game should be saved first
-                        try {
-                            loadGame(filePath);
-                        } catch (InvalidPathException | IOException e1) {
-                            JOptionPane.showMessageDialog(this, "Failed to read file");
-                        }
-
-                    }
-                } else if (decision == 1) { // loading file
-                    int r = fileChooser.showSaveDialog(null);
-
-                    // if the user selects a file
-                    if (r == JFileChooser.APPROVE_OPTION) {
-                        String filePath = fileChooser.getSelectedFile()
-                                .getAbsolutePath();
-
-                        // save code here
-
-                    }
-                }
-            }
+            loadOrSave();
         }
     }
 
     /**
      * Establishes the initial board
      */
-
     public void setUp(String path) {
 
         swapper = new ClickSwapper();
@@ -121,17 +73,14 @@ public class GameWindow extends JFrame implements ActionListener {
         GridBagConstraints basic = new GridBagConstraints();
         basic.insets = new Insets(5, 5, 5, 5);
 
-        // This is really a constant in the GrdiBagConstraints. This way we
-        // don't need to know what type/value it is
-
-        basic.fill = GridBagConstraints.BOTH;
-
+        // button setup
         basic.anchor = GridBagConstraints.NORTH;
         basic.fill = GridBagConstraints.HORIZONTAL;
         basic.gridx = 1;
         basic.gridy = 0;
         this.addButtons(basic);
 
+        // side panels setup
         basic.gridx = 0;
         basic.gridy = 1;
         basic.anchor = GridBagConstraints.WEST;
@@ -144,16 +93,16 @@ public class GameWindow extends JFrame implements ActionListener {
         basic.anchor = GridBagConstraints.EAST;
         leftPanel = new SidePanel(8, 8);
         leftPanel.addSwapper(swapper);
-
         this.add(leftPanel, basic);
 
+        // center panel setup
         basic.gridx = 1;
         basic.gridy = 1;
         gameBoard = new GameBoard(16, 4);
         gameBoard.addSwapper(swapper);
-
         add(gameBoard, basic);
 
+        // start with initial file
         try {
             loadGame("input/default.mze");
         } catch (InvalidPathException | IOException e) {
@@ -161,13 +110,8 @@ public class GameWindow extends JFrame implements ActionListener {
             e.printStackTrace();
         }
         return;
-
     }
 
-    /**
-     * Used by setUp() to configure the buttons on a button bar and add it to
-     * the gameBoard
-     */
     private void reset() {
         leftPanel.reset();
         rightPanel.reset();
@@ -175,15 +119,120 @@ public class GameWindow extends JFrame implements ActionListener {
         swapper.reset();
     }
 
-    private void loadGame(String path) throws InvalidPathException, IOException {
+    private void loadOrSave() {
+        // first ask to load or save
+        // 0 = load, 1 = save
+        Object[] options = { "Load", "Save" };
+        int decision = JOptionPane.showOptionDialog(this, "Select an action",
+                "File load", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, // do not use a custom Icon
+                options, // the titles of buttons
+                options[0]); // default button title
+
+        if (decision == 0) { // loading file
+            checkToSave();
+            loadDialog();
+        } else if (decision == 1) { // loading file
+            saveDialog();
+        }
+    }
+
+    private void saveDialog() {
+        // get path
+        JFileChooser fileChooser = new JFileChooser(
+                System.getProperty("user.dir"));
+        int r = fileChooser.showSaveDialog(null);
+
+        if (r != JFileChooser.CANCEL_OPTION) {
+            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+            File saveFile = new File(filePath);
+
+            if (saveFile.exists()) {
+                Object[] options = { "Overwrite", "Pick new file path" };
+                int decision = JOptionPane.showOptionDialog(this,
+                        "That file already exists", "File save",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                        null, // do not use a custom Icon
+                        options, // the titles of buttons
+                        options[0]); // default button title
+
+                if (decision == 0) {
+                    saveGame(filePath);
+                } else if (decision == 1) {
+                    saveDialog();
+                }
+            } else {
+                saveGame(filePath);
+            }
+        }
+    }
+
+    private void loadDialog() {
+        // get path
+        JFileChooser fileChooser = new JFileChooser(
+                System.getProperty("user.dir"));
+        int r = fileChooser.showOpenDialog(null);
+
+        if (r != JFileChooser.CANCEL_OPTION) {
+            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+
+            try {
+                loadGame(filePath);
+            } catch (InvalidPathException e) {
+                JOptionPane.showMessageDialog(this, "Failed to find file");
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "File has incorrect type");
+            }
+        }
+    }
+
+    private void saveGame(String filePath) {
+        System.out.println(filePath);
+    }
+
+    private void loadGame(String filePath)
+            throws InvalidPathException, IOException {
+
         FileDecoder filedecoder = new FileDecoder();
-        filedecoder.readFile(path);
+        filedecoder.readFile(filePath);
 
         leftPanel.setTiles(filedecoder);
         rightPanel.setTiles(filedecoder);
-        gameBoard.reset();
+        gameBoard.setTiles(filedecoder);
     }
 
+    private void quit() {
+        checkToSave();
+        System.exit(0);
+
+    }
+
+    private void checkToSave() {
+        if (checkModified()) {
+            Object[] options = { "Save", "Don't save" };
+            int decision = JOptionPane.showOptionDialog(this,
+                    "Would you like to save first?", "File select",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                    null, // do not use a custom Icon
+                    options, // the titles of buttons
+                    options[0]); // default button title
+
+            if (decision == 0) {
+                saveDialog();
+            }
+
+        }
+    }
+
+    private boolean checkModified() {
+        return gameBoard.checkModified() || leftPanel.checkModified()
+                || rightPanel.checkModified();
+    }
+
+    /**
+     * Used by setUp() to configure the buttons on a button bar and add it to
+     * the gameBoard
+     */
     public void addButtons(GridBagConstraints basic) {
         JPanel btnMenu = new JPanel();
 

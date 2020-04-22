@@ -85,6 +85,10 @@ public class TileWrapper extends JPanel {
         updateBorder();
     }
     
+    public boolean checkModified() {
+        return tile != sTile || (tile != null && tile.modified());
+    }
+    
     // border updating
     
     public void setAsSelected() {
