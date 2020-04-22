@@ -18,9 +18,9 @@ import java.util.*;
 
 public class FileDecoder {
     private float[][][] lines;
-    private int[] numLines, degree;
+    private int[] numLines, degree, sdegree;
     private int numberOfTiles;
-    List<Integer> ranTile = new ArrayList<Integer>();
+    List<Integer> ranTileID = new ArrayList<Integer>();
 
     private void filetoByteArray(String path)
             throws IOException, InvalidPathException {
@@ -34,6 +34,7 @@ public class FileDecoder {
 
         numLines = new int[numberOfTiles];
         degree = new int[numberOfTiles];
+        sdegree = new int[numberOfTiles];
         
         for (int i = 0; i < numberOfTiles; i++) {
             int tileNumber = buffer.getInt(); // not yet used
@@ -41,8 +42,10 @@ public class FileDecoder {
             numLines[i] = buffer.getInt();
             lines[tileNumber] = new float[numLines[i]][4];
 
-            ranTile.add(tileNumber);
+            ranTileID.add(tileNumber);
             degree[i] = (int) (Math.random() * 4);
+            sdegree = degree;
+            
             for (int j = 0; j < numLines[i]; j++) {
                 lines[tileNumber][j][0] = buffer.getFloat();
                 lines[tileNumber][j][1] = buffer.getFloat();
@@ -53,13 +56,13 @@ public class FileDecoder {
         
         // Shuffles Tiles around randomly in array using FisherYates shuffle
         // algorithm
-        for (int i = ranTile.size() - 1; i > 0; i--) {
+        for (int i = ranTileID.size() - 1; i > 0; i--) {
             int j = (int) (Math.random() * (i + 1));
-            Collections.swap(ranTile, i, j);
+            Collections.swap(ranTileID, i, j);
         }
     }
 
-    public void readfile(String path) throws InvalidPathException, IOException {
+    public void readFile(String path) throws InvalidPathException, IOException {
         filetoByteArray(path);
     }
 
@@ -71,13 +74,17 @@ public class FileDecoder {
     public int getDegree(int i) {
         return degree[i];
     }
+    
+    public int getInitialDegree(int i) {
+        return sdegree[i];
+    }
 
     public int getNumLines(int i) {
         return numLines[i];
     }
 
     public int getTile(int i) {
-        return ranTile.get(i);
+        return ranTileID.get(i);
     }
 
     public int getTileNum() {

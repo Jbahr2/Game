@@ -16,12 +16,15 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class TileWrapper extends JPanel {
 
+    public int ID;
     private Tile tile;
     private Tile sTile;
     private Color borderColor = new Color(100, 100, 0);
 
-    public TileWrapper(ClickSwapper swapper) {
+    public TileWrapper(int ID) {
         super();
+
+        this.ID = ID;
 
         BorderLayout bl = new BorderLayout();
         setLayout(bl);
@@ -33,16 +36,24 @@ public class TileWrapper extends JPanel {
         setBackground(new Color(254, 211, 48, 255));
         tile = null;
         updateBorder();
+    }
 
+
+    public void addSwapper(ClickSwapper swapper) {
         addMouseListener(swapper);
     }
 
+    public void setTile(Tile toSet) {
+        removeTile();
+        if (toSet != null) {
+            tile = toSet;
+            updateBorder();
+            add(tile, BorderLayout.CENTER);
+        }
+    }
+    
     public Tile getTile() {
         return tile;
-    }
-
-    public Tile getStartingTile() {
-        return sTile;
     }
 
     public void removeTile() {
@@ -53,56 +64,35 @@ public class TileWrapper extends JPanel {
         }
     }
 
-    public void resetTile() {
-        System.out.println(tile);
-        if (sTile != null) {
-            remove(tile);
-            tile = null;
-        }
-        if (sTile != null) {
-            remove(sTile);
-            sTile = null;
-        }
-    }
-
-    public void setTile(Tile toSet) {
-        if (toSet != null) {
-            tile = toSet;
-            updateBorder();
-            add(tile, BorderLayout.CENTER);
-        }
-    }
-
-    public void InitializeTile(Tile toSet) {
-        sTile = toSet;
+    public void rotateTile() {
+        tile.rotate();
     }
 
     public boolean hasTile() {
         return tile != null;
     }
+    
+    public void setInitialTile(Tile toSet) {
+        sTile = toSet;
+    }
 
+    public void reset() {
+        removeTile();
+        setTile(sTile);
+        if (tile != null) {
+            tile.reset();
+        }
+        updateBorder();
+    }
+    
+    // border updating
+    
     public void setAsSelected() {
-        setBorder(BorderFactory.createLineBorder(borderColor));
+        setBorder(BorderFactory.createLineBorder(borderColor, 3));
     }
 
     public void setAsUnselected() {
         updateBorder();
-    }
-
-    public void rotatetile() {
-        tile.setDegree((tile.getDegree() + 1) % 4);
-    }
-
-    public void resetRotation(FileDecoder filedecoder) {
-        tile.setDegree(filedecoder.getDegree(tile.getTilenum()));
-    }
-
-    public void setTile(int Ntile) {
-        tile.setTilenum(Ntile);
-    }
-
-    public void updateTile(FileDecoder filedecoder) {
-        tile.SetTileInfo(filedecoder.getLines(tile.getTilenum()));
     }
 
     public void illegalBorder() {
@@ -113,7 +103,7 @@ public class TileWrapper extends JPanel {
         if (hasTile()) {
             setBorder(BorderFactory.createEmptyBorder());
         } else {
-            setBorder(BorderFactory.createLineBorder(borderColor));
+            setBorder(BorderFactory.createLineBorder(borderColor, 3));
         }
     }
 }

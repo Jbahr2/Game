@@ -14,6 +14,7 @@
  * */
 
 import javax.swing.*;
+import javax.swing.filechooser.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,22 +28,14 @@ public class GameWindow extends JFrame implements ActionListener {
      */
     public static final long serialVersionUID = 1;
 
-    /*
-     * This is so I can try changing the starting point easily. Can certainly be
-     * left out altogether.
-     */
+    
+    
     private SidePanel leftPanel, rightPanel;
     private GameBoard gameBoard;
-    private FileDecoder filedecoder;
+    private ClickSwapper swapper;
 
-    /**
-     * Constructor sets the window name using super(), changes the layout, which
-     * you really need to read up on, and maybe you can see why I chose this
-     * one.
-     *
-     * @param s
-     */
-
+    
+    
     public GameWindow(String s) {
         super(s);
         GridBagLayout gbl = new GridBagLayout();
@@ -61,12 +54,59 @@ public class GameWindow extends JFrame implements ActionListener {
      */
 
     public void actionPerformed(ActionEvent e) {
-        if ("exit".equals(e.getActionCommand()))
+        if ("exit".equals(e.getActionCommand())) {
             System.exit(0);
-        if ("reset".equals(e.getActionCommand()))
+        }
+        if ("reset".equals(e.getActionCommand())) {
             reset();
-        if ("new".equals(e.getActionCommand()))
-            newgame("input/default.mze");
+        }
+        if ("file".equals(e.getActionCommand())) {
+
+            // first ask to load or save
+            // 0 = load, 1 = save
+            Object[] options = { "Load", "Save" };
+            int decision = JOptionPane.showOptionDialog(this,
+                    "Select an action", "File select",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                    null, // do not use a custom Icon
+                    options, // the titles of buttons
+                    options[0]); // default button title
+
+            if (decision != JOptionPane.CLOSED_OPTION) {
+
+                JFileChooser fileChooser = new JFileChooser(
+                        System.getProperty("user.dir"));
+
+                if (decision == 0) { // loading file
+                    int r = fileChooser.showOpenDialog(null);
+
+                    // if the user selects a file
+                    if (r == JFileChooser.APPROVE_OPTION) {
+                        String filePath = fileChooser.getSelectedFile()
+                                .getAbsolutePath();
+
+                        // need to check if current game should be saved first
+                        try {
+                            loadGame(filePath);
+                        } catch (InvalidPathException | IOException e1) {
+                            JOptionPane.showMessageDialog(this, "Failed to read file");
+                        }
+
+                    }
+                } else if (decision == 1) { // loading file
+                    int r = fileChooser.showSaveDialog(null);
+
+                    // if the user selects a file
+                    if (r == JFileChooser.APPROVE_OPTION) {
+                        String filePath = fileChooser.getSelectedFile()
+                                .getAbsolutePath();
+
+                        // save code here
+
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -74,17 +114,8 @@ public class GameWindow extends JFrame implements ActionListener {
      */
 
     public void setUp(String path) {
-        // actually create the array for elements, make sure it is big enough
 
-        // Need to play around with the dimensions and the gridx/y values
-        // These constraints are going to be added to the pieces/parts I
-        // stuff into the "GridBag".
-        // YOU CAN USE any type of constraints you like. Just make it work.
-        FileDecoder filedecoder = new FileDecoder();
-        tryUpdateFiledecoder(filedecoder, path);
-        this.filedecoder = filedecoder;
-
-        ClickSwapper swapper = new ClickSwapper();
+        swapper = new ClickSwapper();
         addMouseListener(swapper);
 
         GridBagConstraints basic = new GridBagConstraints();
@@ -104,38 +135,33 @@ public class GameWindow extends JFrame implements ActionListener {
         basic.gridx = 0;
         basic.gridy = 1;
         basic.anchor = GridBagConstraints.WEST;
-        rightPanel = new SidePanel(0, swapper, filedecoder);
+        rightPanel = new SidePanel(0, 8);
+        rightPanel.addSwapper(swapper);
         this.add(rightPanel, basic);
-
-        // want to be able to add swapper outside of constructor call for panels
-        // and
-        // board, more elegant
 
         basic.gridx = 2;
         basic.gridy = 1;
         basic.anchor = GridBagConstraints.EAST;
-        leftPanel = new SidePanel(1, swapper, filedecoder);
+        leftPanel = new SidePanel(8, 8);
+        leftPanel.addSwapper(swapper);
+
         this.add(leftPanel, basic);
 
         basic.gridx = 1;
         basic.gridy = 1;
-        gameBoard = new GameBoard(swapper, filedecoder);
+        gameBoard = new GameBoard(16, 4);
+        gameBoard.addSwapper(swapper);
+
         add(gameBoard, basic);
 
+        try {
+            loadGame("input/default.mze");
+        } catch (InvalidPathException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return;
 
-    }
-
-    private void tryUpdateFiledecoder(FileDecoder filedecoder, String path) {
-        try {
-            filedecoder.readfile(path);
-        } catch (InvalidPathException e) {
-            JOptionPane.showMessageDialog(this, "Failed to find file");
-            System.exit(ERROR);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Failed to read file");
-            System.exit(ERROR);
-        }
     }
 
     /**
@@ -143,30 +169,31 @@ public class GameWindow extends JFrame implements ActionListener {
      * the gameBoard
      */
     private void reset() {
-        leftPanel.resetside(filedecoder);
-        rightPanel.resetside(filedecoder);
-        gameBoard.resetboard();
+        leftPanel.reset();
+        rightPanel.reset();
+        gameBoard.reset();
+        swapper.reset();
     }
 
-    private void newgame(String path) {
+    private void loadGame(String path) throws InvalidPathException, IOException {
         FileDecoder filedecoder = new FileDecoder();
-        tryUpdateFiledecoder(filedecoder, path);
-        this.filedecoder = filedecoder;
-        leftPanel.newgame(filedecoder);
-        rightPanel.newgame(filedecoder);
-        gameBoard.resetboard();
+        filedecoder.readFile(path);
+
+        leftPanel.setTiles(filedecoder);
+        rightPanel.setTiles(filedecoder);
+        gameBoard.reset();
     }
 
     public void addButtons(GridBagConstraints basic) {
         JPanel btnMenu = new JPanel();
 
-        JButton newGameBtn = new JButton("New Game");
+        JButton newGameBtn = new JButton("File");
         JButton resetBtn = new JButton("Reset");
         JButton quitBtn = new JButton("Quit");
 
         btnMenu.setBackground(new Color(254, 211, 48, 255));
 
-        newGameBtn.setActionCommand("new");
+        newGameBtn.setActionCommand("file");
         newGameBtn.addActionListener(this);
 
         resetBtn.setActionCommand("reset");

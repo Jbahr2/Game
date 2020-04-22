@@ -19,7 +19,7 @@ public class Tile extends JPanel {
     // 0 = x1, 1 = y1, 2 = x2, 3 = y2
     private float[][] lines;
     // degree: 0 = no rotation, 1 = 90, etc...
-    private int degree, tilenumber;
+    private int sdegree, degree, tileID;
 
     public Tile() {
         super();
@@ -27,25 +27,26 @@ public class Tile extends JPanel {
         setBackground(new Color(69, 170, 242));
     }
 
-    public void SetTileInfo(float[][] lines) {
+    public void SetTileInfo(float[][] lines, int degree, int sdegree, int tileID) {
         this.lines = lines;
+        this.degree = degree;
+        this.sdegree = sdegree;
+        this.tileID = tileID;
     }
 
-    public void setDegree(int degree) {
-        this.degree = degree;
+    public void rotate() {
+        degree = (degree + 1)%4;
         this.repaint();
     }
 
-    public int getDegree() {
-        return degree;
+    
+    public void reset() {
+        degree = sdegree;
     }
 
-    public void setTilenum(int tilenumber) {
-        this.tilenumber = tilenumber;
-    }
 
-    public int getTilenum() {
-        return tilenumber;
+    public int getTileID() {
+        return tileID;
     }
 
     @Override
