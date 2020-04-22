@@ -9,6 +9,9 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -38,7 +41,6 @@ public class TileWrapper extends JPanel {
         updateBorder();
     }
 
-
     public void addSwapper(ClickSwapper swapper) {
         addMouseListener(swapper);
     }
@@ -51,7 +53,7 @@ public class TileWrapper extends JPanel {
             add(tile, BorderLayout.CENTER);
         }
     }
-    
+
     public Tile getTile() {
         return tile;
     }
@@ -71,7 +73,7 @@ public class TileWrapper extends JPanel {
     public boolean hasTile() {
         return tile != null;
     }
-    
+
     public void setInitialTile(Tile toSet) {
         sTile = toSet;
     }
@@ -84,13 +86,28 @@ public class TileWrapper extends JPanel {
         }
         updateBorder();
     }
-    
+
     public boolean checkModified() {
         return tile != sTile || (tile != null && tile.modified());
     }
-    
+
+    public byte[] getByteArray() {
+        if (tile != null) {
+            byte[] tileBytes = tile.getByteArray();
+            ByteBuffer bytes = ByteBuffer.allocate(4 + tileBytes.length);
+
+            bytes.putInt(ID); // placement
+            bytes.put(tile.getByteArray());
+
+            return bytes.array();
+
+        }
+        return null;
+
+    }
+
     // border updating
-    
+
     public void setAsSelected() {
         setBorder(BorderFactory.createLineBorder(borderColor, 3));
     }
@@ -110,4 +127,5 @@ public class TileWrapper extends JPanel {
             setBorder(BorderFactory.createLineBorder(borderColor, 3));
         }
     }
+
 }

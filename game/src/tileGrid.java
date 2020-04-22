@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 
@@ -51,7 +53,7 @@ public class tileGrid extends JPanel {
         reset();
         for (int i = 0; i < tileWrappers.length; i++) {
             for (int j = 0; j < tileWrappers[i].length; j++) {
-                
+
                 Tile tile = filedecoder.getTile(tileWrappers[i][j].ID);
 
                 tileWrappers[i][j].setTile(tile);
@@ -60,7 +62,7 @@ public class tileGrid extends JPanel {
             }
         }
     }
-    
+
     public boolean checkModified() {
         for (int i = 0; i < tileWrappers.length; i++) {
             for (int j = 0; j < tileWrappers[i].length; j++) {
@@ -70,6 +72,25 @@ public class tileGrid extends JPanel {
             }
         }
         return false;
+    }
+
+    public byte[] getByteArray() {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+
+        for (int i = 0; i < tileWrappers.length; i++) {
+            for (int j = 0; j < tileWrappers[i].length; j++) {
+                if (tileWrappers[i][j].hasTile()) {
+                    try {
+                        bytes.write(tileWrappers[i][j].getByteArray());
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        return bytes.toByteArray();
     }
 
 }

@@ -18,9 +18,18 @@ import javax.swing.filechooser.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public class GameWindow extends JFrame implements ActionListener {
     /**
@@ -187,7 +196,30 @@ public class GameWindow extends JFrame implements ActionListener {
     }
 
     private void saveGame(String filePath) {
-        System.out.println(filePath);
+        try {
+            FileOutputStream saveFile = new FileOutputStream(filePath, false);
+
+            byte[] playedFlag = {(byte) 0xca, (byte) 0xfe, (byte) 0xde, (byte) 0xed};
+            byte[] numOfTiles = ByteBuffer.allocate(4).putInt(16).array();
+            byte[] lbytes = leftPanel.getByteArray();
+            byte[] rbytes = rightPanel.getByteArray();
+            byte[] cbytes = gameBoard.getByteArray();
+            
+            ByteBuffer bytes = ByteBuffer.allocate(playedFlag.length + numOfTiles.length + lbytes.length + rbytes.length + cbytes.length);
+            bytes.put(playedFlag);
+            bytes.put(numOfTiles);
+            bytes.put(lbytes);
+            bytes.put(rbytes);
+            bytes.put(cbytes);
+
+            saveFile.write(bytes.array());
+            saveFile.close();
+            
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
 
     private void loadGame(String filePath)
@@ -197,8 +229,11 @@ public class GameWindow extends JFrame implements ActionListener {
         filedecoder.readFile(filePath);
 
         leftPanel.setTiles(filedecoder);
+        leftPanel.reset();
         rightPanel.setTiles(filedecoder);
+        rightPanel.reset();
         gameBoard.setTiles(filedecoder);
+        gameBoard.reset();
     }
 
     private void quit() {

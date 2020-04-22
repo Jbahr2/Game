@@ -10,6 +10,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
+import java.io.ByteArrayOutputStream;
+import java.nio.ByteBuffer;
 import java.awt.BasicStroke;
 import javax.swing.*;
 
@@ -63,5 +65,21 @@ public class Tile extends JPanel {
 
     public boolean modified() {
         return degree != initialDegree;
+    }
+    
+    public byte[] getByteArray() {
+        ByteBuffer bytes = ByteBuffer.allocate(4+4+4*4*lines.length);
+        
+        bytes.putInt(degree); // rotation
+        bytes.putInt(lines.length); // tile count
+
+        for (int i = 0; i < lines.length; i++) {
+            for (int j = 0; j < lines[0].length; j++) {
+                bytes.putFloat(lines[i][j]);
+            }
+        }
+        
+        return bytes.array();
+
     }
 }
