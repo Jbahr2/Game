@@ -42,6 +42,8 @@ public class GameWindow extends JFrame implements ActionListener {
     private GameBoard gameBoard;
     private ClickSwapper swapper;
 
+    private boolean modified;
+    
     public GameWindow(String s) {
         super(s);
         GridBagLayout gbl = new GridBagLayout();
@@ -75,7 +77,8 @@ public class GameWindow extends JFrame implements ActionListener {
      * Establishes the initial board
      */
     public void setUp(String path) {
-
+        modified = true;
+        
         swapper = new ClickSwapper();
         addMouseListener(swapper);
 
@@ -243,7 +246,7 @@ public class GameWindow extends JFrame implements ActionListener {
     }
 
     private void checkToSave() {
-        if (checkModified()) {
+        if (modified) {
             Object[] options = { "Save", "Don't save" };
             int decision = JOptionPane.showOptionDialog(this,
                     "Would you like to save first?", "File select",
@@ -257,11 +260,6 @@ public class GameWindow extends JFrame implements ActionListener {
             }
 
         }
-    }
-
-    private boolean checkModified() {
-        return gameBoard.checkModified() || leftPanel.checkModified()
-                || rightPanel.checkModified();
     }
 
     /**

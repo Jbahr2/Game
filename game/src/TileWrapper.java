@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class TileWrapper extends JPanel {
 
-    public int ID;
+    private int ID;
     private Tile tile;
     private Tile sTile;
     private Color borderColor = new Color(100, 100, 0);
@@ -87,10 +87,6 @@ public class TileWrapper extends JPanel {
         updateBorder();
     }
 
-    public boolean checkModified() {
-        return tile != sTile || (tile != null && tile.modified());
-    }
-
     public byte[] getByteArray() {
         if (tile != null) {
             byte[] tileBytes = tile.getByteArray();
@@ -104,6 +100,10 @@ public class TileWrapper extends JPanel {
         }
         return null;
 
+    }
+
+    public int getID() {
+        return ID;
     }
 
     // border updating

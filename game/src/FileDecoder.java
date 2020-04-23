@@ -74,11 +74,11 @@ public class FileDecoder {
             }
 
             if (played) {
-                tiles.put(tileID, new Tile(lines, degree, degree, tileID));
+                tiles.put(tileID, new Tile(lines, degree, tileID));
             } else {
                 tileID = randomIDs.remove(0);
                 degree = randomRotations.remove(0);
-                tiles.put(tileID, new Tile(lines, degree, degree, tileID));
+                tiles.put(tileID, new Tile(lines, degree, tileID));
             }
         }
     }

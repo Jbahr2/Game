@@ -23,11 +23,11 @@ public class Tile extends JPanel {
     // degree: 0 = no rotation, 1 = 90, etc...
     private int initialDegree, degree, tileID;
 
-    public Tile(float[][] lines, int degree, int initialDegree, int tileID) {
+    public Tile(float[][] lines, int degree, int tileID) {
         super();
         this.lines = lines;
         this.degree = degree;
-        this.initialDegree = initialDegree;
+        this.initialDegree = degree;
         this.tileID = tileID;
         setOpaque(true);
         setBackground(new Color(69, 170, 242));
@@ -61,10 +61,6 @@ public class Tile extends JPanel {
             G2D.draw(new Line2D.Double(lines[i][0], lines[i][1], lines[i][2],
                     lines[i][3]));
         }
-    }
-
-    public boolean modified() {
-        return degree != initialDegree;
     }
     
     public byte[] getByteArray() {

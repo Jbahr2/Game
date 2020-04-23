@@ -10,24 +10,23 @@ import javax.swing.JPanel;
 public class tileGrid extends JPanel {
 
     private TileWrapper[][] tileWrappers;
-    private Object IDoffset;
 
     public tileGrid(int IDoffset, int spacing, int width, int height) {
-        this.IDoffset = IDoffset;
         this.tileWrappers = new TileWrapper[width][height];
 
         GridBagLayout gbl = new GridBagLayout();
         setLayout(gbl);
 
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.insets = new Insets(spacing, 0, 0, 0);
+        constraints.insets = new Insets(spacing, spacing, 0, 0);
         setBackground(new Color(0, 0, 0, 0));
 
-        for (int i = 0; i < width; i++) {
-            constraints.gridx = i;
-            for (int j = 0; j < height; j++) {
-                constraints.gridy = j;
-                tileWrappers[i][j] = new TileWrapper(IDoffset + i + j);
+        for (int j = 0; j < height; j++) {
+            constraints.gridy = j;
+            for (int i = 0; i < width; i++) {
+                constraints.gridx = i;
+                int ID = IDoffset + i + j * width;
+                tileWrappers[i][j] = new TileWrapper(ID);
                 add(tileWrappers[i][j], constraints);
             }
         }
@@ -54,24 +53,13 @@ public class tileGrid extends JPanel {
         for (int i = 0; i < tileWrappers.length; i++) {
             for (int j = 0; j < tileWrappers[i].length; j++) {
 
-                Tile tile = filedecoder.getTile(tileWrappers[i][j].ID);
+                Tile tile = filedecoder.getTile(tileWrappers[i][j].getID());
 
                 tileWrappers[i][j].setTile(tile);
                 tileWrappers[i][j].setInitialTile(tile);
 
             }
         }
-    }
-
-    public boolean checkModified() {
-        for (int i = 0; i < tileWrappers.length; i++) {
-            for (int j = 0; j < tileWrappers[i].length; j++) {
-                if (tileWrappers[i][j].checkModified()) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     public byte[] getByteArray() {
