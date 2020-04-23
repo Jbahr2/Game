@@ -42,8 +42,6 @@ public class GameWindow extends JFrame implements ActionListener {
     private GameBoard gameBoard;
     private ClickSwapper swapper;
 
-    private boolean modified;
-    
     public GameWindow(String s) {
         super(s);
         GridBagLayout gbl = new GridBagLayout();
@@ -77,8 +75,7 @@ public class GameWindow extends JFrame implements ActionListener {
      * Establishes the initial board
      */
     public void setUp(String path) {
-        modified = true;
-        
+
         swapper = new ClickSwapper();
         addMouseListener(swapper);
 
@@ -180,6 +177,7 @@ public class GameWindow extends JFrame implements ActionListener {
     }
 
     private void loadDialog() {
+
         // get path
         JFileChooser fileChooser = new JFileChooser(
                 System.getProperty("user.dir"));
@@ -200,15 +198,19 @@ public class GameWindow extends JFrame implements ActionListener {
 
     private void saveGame(String filePath) {
         try {
+            swapper.resetModified();
             FileOutputStream saveFile = new FileOutputStream(filePath, false);
 
-            byte[] playedFlag = {(byte) 0xca, (byte) 0xfe, (byte) 0xde, (byte) 0xed};
+            byte[] playedFlag = { (byte) 0xca, (byte) 0xfe, (byte) 0xde,
+                    (byte) 0xed };
             byte[] numOfTiles = ByteBuffer.allocate(4).putInt(16).array();
             byte[] lbytes = leftPanel.getByteArray();
             byte[] rbytes = rightPanel.getByteArray();
             byte[] cbytes = gameBoard.getByteArray();
-            
-            ByteBuffer bytes = ByteBuffer.allocate(playedFlag.length + numOfTiles.length + lbytes.length + rbytes.length + cbytes.length);
+
+            ByteBuffer bytes = ByteBuffer
+                    .allocate(playedFlag.length + numOfTiles.length
+                            + lbytes.length + rbytes.length + cbytes.length);
             bytes.put(playedFlag);
             bytes.put(numOfTiles);
             bytes.put(lbytes);
@@ -217,7 +219,7 @@ public class GameWindow extends JFrame implements ActionListener {
 
             saveFile.write(bytes.array());
             saveFile.close();
-            
+
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -227,6 +229,8 @@ public class GameWindow extends JFrame implements ActionListener {
 
     private void loadGame(String filePath)
             throws InvalidPathException, IOException {
+
+        swapper.resetModified();
 
         FileDecoder filedecoder = new FileDecoder();
         filedecoder.readFile(filePath);
@@ -246,7 +250,7 @@ public class GameWindow extends JFrame implements ActionListener {
     }
 
     private void checkToSave() {
-        if (modified) {
+        if (swapper.getModified()) {
             Object[] options = { "Save", "Don't save" };
             int decision = JOptionPane.showOptionDialog(this,
                     "Would you like to save first?", "File select",

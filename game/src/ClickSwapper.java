@@ -14,9 +14,12 @@ import javax.swing.SwingUtilities;
 
 class ClickSwapper extends MouseAdapter {
 
-    TileWrapper selected = null;
+    private TileWrapper selected = null;
 
+    private boolean madeModification;
+    
     public ClickSwapper() {
+        madeModification = false;
     }
 
     @Override
@@ -51,7 +54,16 @@ class ClickSwapper extends MouseAdapter {
         deselect();
     }
     
+    public boolean getModified() {
+        return madeModification;
+    }
+    
+    public void resetModified() {
+        madeModification = false;
+    }
+    
     private void moveTile(TileWrapper tile1, TileWrapper tile2) {
+        madeModification = true;
         tile2.setTile(tile1.getTile());
         tile1.removeTile();
     }
