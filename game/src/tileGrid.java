@@ -2,13 +2,20 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 import javax.swing.JPanel;
 
+/* *
+ * Authored by Group H
+ * Class: Software Design 3011
+ * Last Edited: 04/25/2020
+ * 
+ * Description: General format for the tile holders, creates the gameboard and grid.
+ * */
 public class tileGrid extends JPanel {
-
+    private static final long serialVersionUID = 1L;
+    
+    
     private TileWrapper[][] tileWrappers;
 
     public tileGrid(int IDoffset, int spacing, int width, int height) {
@@ -61,24 +68,5 @@ public class tileGrid extends JPanel {
             }
         }
     }
-
-    public byte[] getByteArray() {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-
-        for (int i = 0; i < tileWrappers.length; i++) {
-            for (int j = 0; j < tileWrappers[i].length; j++) {
-                if (tileWrappers[i][j].hasTile()) {
-                    try {
-                        bytes.write(tileWrappers[i][j].getByteArray());
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-        return bytes.toByteArray();
-    }
-
+    
 }

@@ -6,11 +6,6 @@
  * 
  * Description: Creates the tiles on the side of the game board.
  * */
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class SidePanel extends tileGrid  {

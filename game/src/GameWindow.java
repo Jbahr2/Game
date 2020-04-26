@@ -13,23 +13,23 @@
  * Last Edited: 03/10/2020
  * */
 
-import javax.swing.*;
-import javax.swing.filechooser.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class GameWindow extends JFrame implements ActionListener {
     /**
@@ -41,6 +41,7 @@ public class GameWindow extends JFrame implements ActionListener {
     private SidePanel leftPanel, rightPanel;
     private GameBoard gameBoard;
     private ClickSwapper swapper;
+    private FileDecoder filedecoder;
 
     public GameWindow(String s) {
         super(s);
@@ -203,19 +204,26 @@ public class GameWindow extends JFrame implements ActionListener {
 
             byte[] playedFlag = { (byte) 0xca, (byte) 0xfe, (byte) 0xde,
                     (byte) 0xed };
-            byte[] numOfTiles = ByteBuffer.allocate(4).putInt(16).array();
-            byte[] lbytes = leftPanel.getByteArray();
-            byte[] rbytes = rightPanel.getByteArray();
-            byte[] cbytes = gameBoard.getByteArray();
+            
+            Tile[] tiles = filedecoder.getTiles();            
+            byte[][] tileBytes = new byte[tiles.length][];
+            int tileByteCount = 0;
+            
+            for (int i = 0; i < tileBytes.length; i++) {
+                tileBytes[i] = tiles[i].getByteArray();
+                tileByteCount += tileBytes[i].length;
+            }
 
-            ByteBuffer bytes = ByteBuffer
-                    .allocate(playedFlag.length + numOfTiles.length
-                            + lbytes.length + rbytes.length + cbytes.length);
+            ByteBuffer bytes = ByteBuffer.allocate(4+4+tileByteCount);
+            
             bytes.put(playedFlag);
-            bytes.put(numOfTiles);
-            bytes.put(lbytes);
-            bytes.put(rbytes);
-            bytes.put(cbytes);
+            bytes.putInt(tiles.length);
+            
+            for (int i = 0; i < tileBytes.length; i++) {
+                for (int j = 0; j < tileBytes[i].length; j++) {
+                    bytes.put(tileBytes[i][j]);
+                }
+            }
 
             saveFile.write(bytes.array());
             saveFile.close();
@@ -232,7 +240,7 @@ public class GameWindow extends JFrame implements ActionListener {
 
         swapper.resetModified();
 
-        FileDecoder filedecoder = new FileDecoder();
+        filedecoder = new FileDecoder();
         filedecoder.readFile(filePath);
 
         leftPanel.setTiles(filedecoder);

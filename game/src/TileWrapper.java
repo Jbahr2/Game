@@ -9,9 +9,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -49,6 +46,7 @@ public class TileWrapper extends JPanel {
         removeTile();
         if (toSet != null) {
             tile = toSet;
+            tile.setID(ID);
             updateBorder();
             add(tile, BorderLayout.CENTER);
         }
@@ -85,21 +83,6 @@ public class TileWrapper extends JPanel {
             tile.reset();
         }
         updateBorder();
-    }
-
-    public byte[] getByteArray() {
-        if (tile != null) {
-            byte[] tileBytes = tile.getByteArray();
-            ByteBuffer bytes = ByteBuffer.allocate(4 + tileBytes.length);
-
-            bytes.putInt(ID); // placement
-            bytes.put(tile.getByteArray());
-
-            return bytes.array();
-
-        }
-        return null;
-
     }
 
     public int getID() {

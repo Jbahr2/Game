@@ -10,7 +10,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
-import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.awt.BasicStroke;
 import javax.swing.*;
@@ -29,10 +28,11 @@ public class Tile extends JPanel {
         this.degree = degree;
         this.initialDegree = degree;
         this.tileID = tileID;
+
         setOpaque(true);
         setBackground(new Color(69, 170, 242));
     }
-    
+
     public void rotate() {
         degree = (degree + 1) % 4;
         this.repaint();
@@ -42,9 +42,14 @@ public class Tile extends JPanel {
         degree = initialDegree;
     }
 
+    public void setID(int ID) {
+        tileID = ID;
+    }
+
     public int getTileID() {
         return tileID;
     }
+
 
     @Override
     public void paintComponent(Graphics g) {
@@ -62,10 +67,12 @@ public class Tile extends JPanel {
                     lines[i][3]));
         }
     }
-    
+
+
     public byte[] getByteArray() {
-        ByteBuffer bytes = ByteBuffer.allocate(4+4+4*4*lines.length);
-        
+        ByteBuffer bytes = ByteBuffer.allocate(4 + 4 + 4 + 4 * 4 * lines.length);
+
+        bytes.putInt(tileID); // ID
         bytes.putInt(degree); // rotation
         bytes.putInt(lines.length); // tile count
 
@@ -76,6 +83,6 @@ public class Tile extends JPanel {
         }
         
         return bytes.array();
-
     }
+
 }

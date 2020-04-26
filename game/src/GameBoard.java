@@ -6,13 +6,9 @@
  * 
  * Description: Create the grid in the center
  * */
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-
-import javax.swing.JPanel;
 
 public class GameBoard extends tileGrid {
+    private static final long serialVersionUID = 1L;
 
     public GameBoard(int IDOffset, int tileCount) {
         super(IDOffset, 0, tileCount, tileCount);

@@ -6,7 +6,6 @@
  * 
  * Description: Read raw data from file and convert them into readable text.
  * */
-import java.awt.FontFormatException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
@@ -16,17 +15,16 @@ import java.nio.file.Paths;
 import java.util.Collections;
 
 import javax.annotation.processing.FilerException;
-import javax.swing.JOptionPane;
 
 import java.util.*;
 
 public class FileDecoder {
 
-    private Map<Integer, Tile> tiles;
+    private Tile[] tiles;
 
     public void readFile(String path) throws InvalidPathException, IOException {
 
-        tiles = new HashMap<Integer, Tile>();
+        tiles = new Tile[16];
 
         Path tpath = Paths.get(path);
         byte[] data = Files.readAllBytes(tpath);
@@ -74,20 +72,29 @@ public class FileDecoder {
             }
 
             if (played) {
-                tiles.put(tileID, new Tile(lines, degree, tileID));
+                tiles[i] = new Tile(lines, degree, tileID);
             } else {
                 tileID = randomIDs.remove(0);
                 degree = randomRotations.remove(0);
-                tiles.put(tileID, new Tile(lines, degree, tileID));
+                tiles[i] = new Tile(lines, degree, tileID);
             }
         }
     }
 
-    public Tile getTile(int i) {
-        return tiles.get(i);
+    public Tile getTile(int index) {
+        for (int j = 0; j < tiles.length; j++) {
+            if (tiles[j].getTileID() == index) {
+                return tiles[j];
+            }
+        }
+        return null;
     }
 
     public int getTilesSize() {
-        return tiles.size();
+        return tiles.length;
+    }
+    
+    public Tile[] getTiles() {
+        return tiles;
     }
 }
