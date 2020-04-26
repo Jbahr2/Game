@@ -65,8 +65,8 @@ public class GameWindow extends JFrame implements ActionListener {
             System.exit(0);
         if ("reset".equals(e.getActionCommand()))
             reset();
-        if ("new".equals(e.getActionCommand()))
-            newgame("input/default.mze");
+        if ("file".equals(e.getActionCommand())) /* Parker */
+            fileMenu(); /* Parker */
     }
 
     /**
@@ -157,17 +157,61 @@ public class GameWindow extends JFrame implements ActionListener {
         gameBoard.resetboard();
     }
 
+    private void fileMenu() {
+        /* Parker */
+        /* Load or save pop up */
+        Object[] options = { "Save", "Load", "Cancel" };
+        int n = JOptionPane.showOptionDialog(this, "Save or Load Game?",
+                "Save or Load Menu", JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+        FileDialog selector = new FileDialog(this);
+        String fileName = null;
+        if (n == 0) {
+            /* User pressed Save */
+            selector.setTitle("Save");
+            selector.setMode(FileDialog.SAVE);
+            selector.setDirectory("input");
+            selector.setVisible(true);
+            fileName = selector.getFile();
+            /* statement checks if user canceled */
+            if(fileName != null) {
+                /*write magicNumber (0xca, 0xfe, 0xed) */
+                /* numTiles */
+                    /* placement */
+                    /* rotation */
+                    /* numLines */
+                        /* line data */
+            }
+
+        } else if (n == 1) {
+            /* User pressed Load */
+            selector.setTitle("Load");
+            selector.setMode(FileDialog.LOAD);
+            selector.setDirectory("input");
+            selector.setVisible(true);
+            fileName = selector.getFile();
+            /* statement checks if user canceled */
+            if (fileName != null) {
+                newgame(selector.getDirectory() + fileName);
+            }
+        } else {
+            /* User pressed Cancel */
+            return;
+        }
+
+    }
+
     public void addButtons(GridBagConstraints basic) {
         JPanel btnMenu = new JPanel();
 
-        JButton newGameBtn = new JButton("New Game");
+        JButton fileBtn = new JButton("File"); /* Parker */
         JButton resetBtn = new JButton("Reset");
         JButton quitBtn = new JButton("Quit");
 
         btnMenu.setBackground(new Color(254, 211, 48, 255));
 
-        newGameBtn.setActionCommand("new");
-        newGameBtn.addActionListener(this);
+        fileBtn.setActionCommand("file"); /* Parker */
+        fileBtn.addActionListener(this);
 
         resetBtn.setActionCommand("reset");
         resetBtn.addActionListener(this);
@@ -175,7 +219,7 @@ public class GameWindow extends JFrame implements ActionListener {
         quitBtn.setActionCommand("exit");
         quitBtn.addActionListener(this);
 
-        btnMenu.add(newGameBtn);
+        btnMenu.add(fileBtn);
         btnMenu.add(resetBtn);
         btnMenu.add(quitBtn);
         this.add(btnMenu, basic);
