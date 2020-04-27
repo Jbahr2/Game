@@ -12,7 +12,7 @@ import javax.swing.JPanel;
  * 
  * Description: General format for the tile holders, creates the gameboard and grid.
  * */
-public class tileGrid extends JPanel {
+public abstract class tileGrid extends JPanel {
     private static final long serialVersionUID = 1L;
     
     

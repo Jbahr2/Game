@@ -18,7 +18,7 @@ public class TileWrapper extends JPanel {
 
     private int ID;
     private Tile tile;
-    private Tile sTile;
+    private Tile resetTile;
     private Color borderColor = new Color(100, 100, 0);
 
     public TileWrapper(int ID) {
@@ -73,12 +73,12 @@ public class TileWrapper extends JPanel {
     }
 
     public void setInitialTile(Tile toSet) {
-        sTile = toSet;
+        resetTile = toSet;
     }
 
     public void reset() {
         removeTile();
-        setTile(sTile);
+        setTile(resetTile);
         if (tile != null) {
             tile.reset();
         }

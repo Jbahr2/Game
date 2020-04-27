@@ -81,9 +81,9 @@ public class FileDecoder {
         }
     }
 
-    public Tile getTile(int index) {
+    public Tile getTile(int wrapperID) {
         for (int j = 0; j < tiles.length; j++) {
-            if (tiles[j].getTileID() == index) {
+            if (tiles[j].getTileID() == wrapperID) {
                 return tiles[j];
             }
         }

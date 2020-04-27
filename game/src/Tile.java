@@ -20,14 +20,14 @@ public class Tile extends JPanel {
     // 0 = x1, 1 = y1, 2 = x2, 3 = y2
     private float[][] lines;
     // degree: 0 = no rotation, 1 = 90, etc...
-    private int initialDegree, degree, tileID;
+    private int initialDegree, degree, tileWrapperID;
 
     public Tile(float[][] lines, int degree, int tileID) {
         super();
         this.lines = lines;
         this.degree = degree;
         this.initialDegree = degree;
-        this.tileID = tileID;
+        this.tileWrapperID = tileID;
 
         setOpaque(true);
         setBackground(new Color(69, 170, 242));
@@ -43,11 +43,11 @@ public class Tile extends JPanel {
     }
 
     public void setID(int ID) {
-        tileID = ID;
+        tileWrapperID = ID;
     }
 
     public int getTileID() {
-        return tileID;
+        return tileWrapperID;
     }
 
 
@@ -72,7 +72,7 @@ public class Tile extends JPanel {
     public byte[] getByteArray() {
         ByteBuffer bytes = ByteBuffer.allocate(4 + 4 + 4 + 4 * 4 * lines.length);
 
-        bytes.putInt(tileID); // ID
+        bytes.putInt(tileWrapperID); // ID
         bytes.putInt(degree); // rotation
         bytes.putInt(lines.length); // tile count
 
