@@ -14,12 +14,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 
+import javax.annotation.processing.FilerException;
+
 import java.util.*;
 
 public class FileDecoder {
     private float[][][] lines;
     private int[] numLines, degree;
     private int numberOfTiles, magicNumber;
+    private int original = -889274641;
+    private int played = -889266451;
     List<Integer> ranTile = new ArrayList<Integer>();
 
     private void filetoByteArray(String path)
@@ -30,6 +34,13 @@ public class FileDecoder {
 
         ByteBuffer buffer = ByteBuffer.wrap(data);
         magicNumber = buffer.getInt();
+        
+        /* Ensure file is legit */
+        if((magicNumber != original) && (magicNumber != played)) {
+            /* File is wack yo */
+            throw new FilerException("File type incorrect");
+        }
+        
         numberOfTiles = buffer.getInt();
         lines = new float[numberOfTiles][][];
 
@@ -42,7 +53,9 @@ public class FileDecoder {
             numLines[i] = buffer.getInt();
             lines[tileNumber] = new float[numLines[i]][4];
 
-            ranTile.add(tileNumber);
+            if(magicNumber == original) {
+                ranTile.add(tileNumber);
+            }
             for (int j = 0; j < numLines[i]; j++) {
                 lines[tileNumber][j][0] = buffer.getFloat();
                 lines[tileNumber][j][1] = buffer.getFloat();
@@ -77,7 +90,12 @@ public class FileDecoder {
     }
 
     public int getTile(int i) {
-        return ranTile.get(i);
+        if(magicNumber == original) {
+            return ranTile.get(i);
+        }
+        
+        return i;
+        
     }
 
     public int getTileNum() {
