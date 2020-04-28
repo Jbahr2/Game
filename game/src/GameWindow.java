@@ -103,6 +103,7 @@ public class GameWindow extends JFrame implements ActionListener {
 
         basic.gridx = 0;
         basic.gridy = 1;
+        
         basic.anchor = GridBagConstraints.WEST;
         rightPanel = new SidePanel(0, swapper, filedecoder);
         this.add(rightPanel, basic);
@@ -158,7 +159,6 @@ public class GameWindow extends JFrame implements ActionListener {
     }
 
     private void fileMenu() {
-        /* Parker */
         /* Load or save pop up */
         Object[] options = { "Save", "Load", "Cancel" };
         int n = JOptionPane.showOptionDialog(this, "Save or Load Game?",
@@ -192,13 +192,22 @@ public class GameWindow extends JFrame implements ActionListener {
             fileName = selector.getFile();
             /* statement checks if user canceled */
             if (fileName != null) {
-                newgame(selector.getDirectory() + fileName);
+                loadGame(selector.getDirectory() + fileName);
             }
         } else {
             /* User pressed Cancel */
             return;
         }
 
+    }
+    
+    private void loadGame(String path) {
+        FileDecoder filedecoder = new FileDecoder();
+        tryUpdateFiledecoder(filedecoder, path);
+        this.filedecoder = filedecoder;
+        leftPanel.newgame(filedecoder);
+        rightPanel.newgame(filedecoder);
+        gameBoard.resetboard();
     }
 
     public void addButtons(GridBagConstraints basic) {

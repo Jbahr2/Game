@@ -38,7 +38,7 @@ public class Main {
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         game.getContentPane().setBackground(new Color(119, 140, 163));
-        game.setUp("C:/Users/small/Desktop/UW-2020-Spring/SD/program/program5/default.mze"); /* Parker */
+        game.setUp("input/default.mze");
 
         game.setVisible(true);
 

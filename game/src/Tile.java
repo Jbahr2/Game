@@ -19,7 +19,7 @@ public class Tile extends JPanel {
     // 0 = x1, 1 = y1, 2 = x2, 3 = y2
     private float[][] lines;
     // degree: 0 = no rotation, 1 = 90, etc...
-    private int degree, tilenumber;
+    private int degree, tilenumber, location;
 
     public Tile() {
         super();

@@ -19,7 +19,7 @@ import java.util.*;
 public class FileDecoder {
     private float[][][] lines;
     private int[] numLines, degree;
-    private int numberOfTiles, magicNumber; /* Parker */
+    private int numberOfTiles, magicNumber;
     List<Integer> ranTile = new ArrayList<Integer>();
 
     private void filetoByteArray(String path)
@@ -29,7 +29,7 @@ public class FileDecoder {
         byte[] data = Files.readAllBytes(tpath);
 
         ByteBuffer buffer = ByteBuffer.wrap(data);
-        magicNumber = buffer.getInt(); /* Parker */
+        magicNumber = buffer.getInt();
         numberOfTiles = buffer.getInt();
         lines = new float[numberOfTiles][][];
 
@@ -38,7 +38,7 @@ public class FileDecoder {
         
         for (int i = 0; i < numberOfTiles; i++) {
             int tileNumber = buffer.getInt(); // not yet used
-            degree[i] = buffer.getInt(); /* Parker */
+            degree[i] = buffer.getInt();
             numLines[i] = buffer.getInt();
             lines[tileNumber] = new float[numLines[i]][4];
 
