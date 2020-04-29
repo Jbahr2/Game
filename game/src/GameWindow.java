@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
+import java.nio.ByteBuffer;
 
 public class GameWindow extends JFrame implements ActionListener {
     /**
@@ -175,7 +176,7 @@ public class GameWindow extends JFrame implements ActionListener {
             fileName = selector.getFile();
             /* statement checks if user canceled */
             if(fileName != null) {
-                /*write magicNumber (0xca, 0xfe, 0xed) */
+                /* write magicNumber (0xca, 0xfe, 0xed) */
                 /* numTiles */
                     /* placement */
                     /* rotation */
@@ -192,22 +193,13 @@ public class GameWindow extends JFrame implements ActionListener {
             fileName = selector.getFile();
             /* statement checks if user canceled */
             if (fileName != null) {
-                loadGame(selector.getDirectory() + fileName);
+                newgame(selector.getDirectory() + fileName);
             }
         } else {
             /* User pressed Cancel */
             return;
         }
 
-    }
-    
-    private void loadGame(String path) {
-        FileDecoder filedecoder = new FileDecoder();
-        tryUpdateFiledecoder(filedecoder, path);
-        this.filedecoder = filedecoder;
-        leftPanel.newgame(filedecoder);
-        rightPanel.newgame(filedecoder);
-        gameBoard.resetboard();
     }
 
     public void addButtons(GridBagConstraints basic) {
