@@ -156,7 +156,7 @@ public class GameWindow extends JFrame implements ActionListener {
         this.filedecoder = filedecoder;
         leftPanel.newgame(filedecoder);
         rightPanel.newgame(filedecoder);
-        gameBoard.resetboard();
+        gameBoard.newgame(filedecoder);
     }
 
     private void fileMenu() {

@@ -19,12 +19,10 @@ import javax.annotation.processing.FilerException;
 import java.util.*;
 
 public class FileDecoder {
-    private float[][][] lines;
-    private int[] numLines, degree;
-    private int numberOfTiles, magicNumber;
+    private int magicNumber;
     private int original = -889274641;
     private int played = -889266451;
-    List<Integer> ranTile = new ArrayList<Integer>();
+    private Tile tiles[];
 
     private void filetoByteArray(String path)
             throws IOException, InvalidPathException {
@@ -34,42 +32,41 @@ public class FileDecoder {
 
         ByteBuffer buffer = ByteBuffer.wrap(data);
         magicNumber = buffer.getInt();
-        
+
         /* Ensure file is legit */
-        if((magicNumber != original) && (magicNumber != played)) {
+        if ((magicNumber != original) && (magicNumber != played)) {
             /* File is wack yo */
             throw new FilerException("File type incorrect");
         }
         
-        numberOfTiles = buffer.getInt();
-        lines = new float[numberOfTiles][][];
+        int numberOfTiles = buffer.getInt();
 
-        numLines = new int[numberOfTiles];
-        degree = new int[numberOfTiles];
-        
+        tiles = new Tile[numberOfTiles];
+
         for (int i = 0; i < numberOfTiles; i++) {
-            int tileNumber = buffer.getInt(); // not yet used
-            degree[i] = buffer.getInt();
-            numLines[i] = buffer.getInt();
-            lines[tileNumber] = new float[numLines[i]][4];
+            int wrapperID = buffer.getInt(); // not yet used
+            int degree = buffer.getInt();
+            int numLines = buffer.getInt();
+            float[][] lines = new float[numLines][4];
 
+            for (int j = 0; j < numLines; j++) {
+                lines[j][0] = buffer.getFloat();
+                lines[j][1] = buffer.getFloat();
+                lines[j][3] = buffer.getFloat();
+                lines[j][4] = buffer.getFloat();
+            }
+            
             if(magicNumber == original) {
-                ranTile.add(tileNumber);
+                /* randomize degree and tile wrapper id */
+               // create an array, pick random ids out of array
+                // create an array, pick random degrees out of array
+                // very similar to boolean deck from cosci whatever
+                
             }
-            for (int j = 0; j < numLines[i]; j++) {
-                lines[tileNumber][j][0] = buffer.getFloat();
-                lines[tileNumber][j][1] = buffer.getFloat();
-                lines[tileNumber][j][2] = buffer.getFloat();
-                lines[tileNumber][j][3] = buffer.getFloat();
-            }
+            
+            tiles[i] = new Tile(lines, degree, wrapperID);
         }
-        
-        // Shuffles Tiles around randomly in array using FisherYates shuffle
-        // algorithm
-        for (int i = ranTile.size() - 1; i > 0; i--) {
-            int j = (int) (Math.random() * (i + 1));
-            Collections.swap(ranTile, i, j);
-        }
+
     }
 
     public void readfile(String path) throws InvalidPathException, IOException {
@@ -80,7 +77,6 @@ public class FileDecoder {
         return lines[i];
     }
 
-
     public int getDegree(int i) {
         return degree[i];
     }
@@ -89,19 +85,14 @@ public class FileDecoder {
         return numLines[i];
     }
 
-    public int getTile(int i) {
-        if(magicNumber == original) {
-            return ranTile.get(i);
-        }
-        
-        return i;
-        
+    public int getTileIndex(int i) {
+        return randomTileIndex.get(i);
     }
 
     public int getTileNum() {
         return numberOfTiles;
     }
-    
+
     public int getMagicNum() {
         return magicNumber; /* Parker */
     }

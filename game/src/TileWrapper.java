@@ -17,11 +17,14 @@ import javax.swing.JPanel;
 public class TileWrapper extends JPanel {
 
     private Tile tile;
-    private Tile sTile;
+    private Tile initialTile;
     private Color borderColor = new Color(100, 100, 0);
+    private int wrapperID;
 
-    public TileWrapper(ClickSwapper swapper) {
+    public TileWrapper(ClickSwapper swapper, int id) {
         super();
+        
+        wrapperID = id;
 
         BorderLayout bl = new BorderLayout();
         setLayout(bl);
@@ -42,7 +45,7 @@ public class TileWrapper extends JPanel {
     }
 
     public Tile getStartingTile() {
-        return sTile;
+        return initialTile;
     }
 
     public void removeTile() {
@@ -50,18 +53,6 @@ public class TileWrapper extends JPanel {
             remove(tile);
             tile = null;
             updateBorder();
-        }
-    }
-
-    public void resetTile() {
-        System.out.println(tile);
-        if (sTile != null) {
-            remove(tile);
-            tile = null;
-        }
-        if (sTile != null) {
-            remove(sTile);
-            sTile = null;
         }
     }
 
@@ -74,7 +65,7 @@ public class TileWrapper extends JPanel {
     }
 
     public void InitializeTile(Tile toSet) {
-        sTile = toSet;
+        initialTile = toSet;
     }
 
     public boolean hasTile() {
@@ -97,14 +88,6 @@ public class TileWrapper extends JPanel {
         tile.setDegree(filedecoder.getDegree(tile.getTilenum()));
     }
 
-    public void setTile(int Ntile) {
-        tile.setTilenum(Ntile);
-    }
-
-    public void updateTile(FileDecoder filedecoder) {
-        tile.SetTileInfo(filedecoder.getLines(tile.getTilenum()));
-    }
-
     public void illegalBorder() {
         setBorder(BorderFactory.createLineBorder((new Color(250, 0, 0)), 3));
     }
@@ -115,5 +98,10 @@ public class TileWrapper extends JPanel {
         } else {
             setBorder(BorderFactory.createLineBorder(borderColor));
         }
+    }
+
+    public void reset() {
+        setTile(initialTile);
+        Tile.reset();
     }
 }
