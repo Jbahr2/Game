@@ -66,7 +66,6 @@ public class FileDecoder {
             
             int degree = buffer.getInt();
             if(magicNumber == original) {degree = rng.nextInt(4);}
-            System.out.println(degree);
             
             int numLines = buffer.getInt();
             float[][] lines = new float[numLines][4];
