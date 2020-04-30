@@ -106,7 +106,7 @@ public class GameWindow extends JFrame implements ActionListener {
         basic.gridy = 1;
         
         basic.anchor = GridBagConstraints.WEST;
-        rightPanel = new SidePanel(0, swapper, filedecoder);
+        rightPanel = new SidePanel(filedecoder, swapper, 1, 8, 8);
         this.add(rightPanel, basic);
 
         // want to be able to add swapper outside of constructor call for panels
@@ -116,12 +116,12 @@ public class GameWindow extends JFrame implements ActionListener {
         basic.gridx = 2;
         basic.gridy = 1;
         basic.anchor = GridBagConstraints.EAST;
-        leftPanel = new SidePanel(1, swapper, filedecoder);
+        leftPanel = new SidePanel(filedecoder, swapper, 1, 8, 0);
         this.add(leftPanel, basic);
 
         basic.gridx = 1;
         basic.gridy = 1;
-        gameBoard = new GameBoard(swapper, filedecoder);
+        gameBoard = new GameBoard(filedecoder, swapper, 4, 4, 16);
         add(gameBoard, basic);
 
         return;
