@@ -40,28 +40,42 @@ public class FileDecoder {
         }
         
         int numberOfTiles = buffer.getInt();
-
+        
+        int[] tempId = new int[numberOfTiles];
+        Random rng = new Random();
+        if(magicNumber == original) {
+            Vector<Integer> randomInts = new Vector<Integer>();
+            
+            for(int a = 0; a < numberOfTiles; a++) {
+                randomInts.add(a);
+            }
+            
+            for(int b = numberOfTiles; b > 0; b--) {
+                int picked = rng.nextInt(b);
+                tempId[numberOfTiles - b] = (int)randomInts.get(picked);
+                randomInts.remove(picked);
+            }
+        }
+        
         tiles = new Tile[numberOfTiles];
 
         for (int i = 0; i < numberOfTiles; i++) {
+            
             int wrapperID = buffer.getInt(); // not yet used
+            if(magicNumber == original) {wrapperID = tempId[i];}
+            
             int degree = buffer.getInt();
+            if(magicNumber == original) {degree = rng.nextInt(4);}
+            System.out.println(degree);
+            
             int numLines = buffer.getInt();
             float[][] lines = new float[numLines][4];
 
             for (int j = 0; j < numLines; j++) {
                 lines[j][0] = buffer.getFloat();
                 lines[j][1] = buffer.getFloat();
+                lines[j][2] = buffer.getFloat();
                 lines[j][3] = buffer.getFloat();
-                lines[j][4] = buffer.getFloat();
-            }
-            
-            if(magicNumber == original) {
-                /* randomize degree and tile wrapper id */
-               // create an array, pick random ids out of array
-                // create an array, pick random degrees out of array
-                // very similar to boolean deck from cosci whatever
-                
             }
             
             tiles[i] = new Tile(lines, degree, wrapperID);
@@ -73,24 +87,8 @@ public class FileDecoder {
         filetoByteArray(path);
     }
 
-    public float[][] getLines(int i) {
-        return lines[i];
-    }
-
-    public int getDegree(int i) {
-        return degree[i];
-    }
-
-    public int getNumLines(int i) {
-        return numLines[i];
-    }
-
-    public int getTileIndex(int i) {
-        return randomTileIndex.get(i);
-    }
-
-    public int getTileNum() {
-        return numberOfTiles;
+    public Tile[] getTiles() {
+        return tiles;
     }
 
     public int getMagicNum() {

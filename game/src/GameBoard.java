@@ -13,7 +13,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class GameBoard extends JPanel {
+public class GameBoard extends TileGrid {
     private TileWrapper[] tileWrapper;
 
     public GameBoard(ClickSwapper swapper, FileDecoder filedecoder) {
