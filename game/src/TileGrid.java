@@ -11,19 +11,21 @@ public class TileGrid extends JPanel {
     
     public TileGrid(FileDecoder fileDecoder, ClickSwapper swapper, int width, int height, int start) {
         
-        tileWrapper = new TileWrapper[width][height];
+        tileWrapper = new TileWrapper[height][width];
         
         GridBagLayout gbl = new GridBagLayout();
         setLayout(gbl);
         
         GridBagConstraints constraints = new GridBagConstraints();
         
+        Tile[] tiles = new Tile[32];
+        tiles = fileDecoder.getTiles();
         
         for (int i = 0; i < height; i++) {
             for(int x = 0; x < width; x++) {
                 constraints.gridy = i;
                 constraints.gridx = x;
-                Tile tile = new Tile();
+                Tile tile = tiles[x+i];
                 TileWrapper tileWrapper = new TileWrapper(swapper, start);
                 tileWrapper.setTile(tile);
                 tileWrapper.InitializeTile(tile);
@@ -35,7 +37,7 @@ public class TileGrid extends JPanel {
     }
     
     public void fillTileWrappers(FileDecoder fileDecoder) {
-        
+        /* lul what? */
     }
 
     public void reset() {

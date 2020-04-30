@@ -85,7 +85,7 @@ public class TileWrapper extends JPanel {
     }
 
     public void resetRotation(FileDecoder filedecoder) {
-        tile.setDegree(filedecoder.getDegree(tile.getTilenum()));
+        //tile.setDegree(filedecoder.getDegree(tile.getTilenum()));
     }
 
     public void illegalBorder() {
@@ -102,6 +102,6 @@ public class TileWrapper extends JPanel {
 
     public void reset() {
         setTile(initialTile);
-        Tile.reset();
+        //TileGrid.reset();
     }
 }
