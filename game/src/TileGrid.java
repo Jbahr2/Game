@@ -22,10 +22,11 @@ public class TileGrid extends JPanel {
         tiles = fileDecoder.getTiles();
         
         for (int i = 0; i < height; i++) {
+            constraints.gridy = i;
             for(int x = 0; x < width; x++) {
-                constraints.gridy = i;
+                
                 constraints.gridx = x;
-                Tile tile = tiles[x+i];
+                Tile tile = tiles[i+x];
                 TileWrapper tileWrapper = new TileWrapper(swapper, start);
                 tileWrapper.setTile(tile);
                 tileWrapper.InitializeTile(tile);
