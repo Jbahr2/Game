@@ -51,6 +51,7 @@ class ClickSwapper extends MouseAdapter {
     }
 
     public void reset() {
+        resetModified();
         deselect();
     }
     

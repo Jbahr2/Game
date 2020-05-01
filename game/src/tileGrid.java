@@ -68,5 +68,12 @@ public abstract class tileGrid extends JPanel {
             }
         }
     }
+    public void clearGrid() {
+        for (int i = 0; i < tileWrappers.length; i++) {
+            for (int j = 0; j < tileWrappers[i].length; j++) {
+                tileWrappers[i][j].removeTile();
+            }
+        }
+    }
     
 }

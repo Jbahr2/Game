@@ -42,6 +42,7 @@ public class GameWindow extends JFrame implements ActionListener {
     private GameBoard gameBoard;
     private ClickSwapper swapper;
     private FileDecoder filedecoder;
+    private boolean isBadGame;
 
     public GameWindow(String s) {
         super(s);
@@ -117,12 +118,15 @@ public class GameWindow extends JFrame implements ActionListener {
             loadGame("input/default.mze");
         } catch (InvalidPathException | IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            loadDialog();
         }
         return;
     }
 
     private void reset() {
+        if(isBadGame == true) {
+            return;
+        }
         leftPanel.reset();
         rightPanel.reset();
         gameBoard.reset();
@@ -149,6 +153,10 @@ public class GameWindow extends JFrame implements ActionListener {
 
     private void saveDialog() {
         // get path
+        if(isBadGame == true) {
+            JOptionPane.showMessageDialog(this, "File cannot be save: Invalid Format"); //change wording 
+            return;
+        }
         JFileChooser fileChooser = new JFileChooser(
                 System.getProperty("user.dir"));
         int r = fileChooser.showSaveDialog(null);
@@ -180,6 +188,7 @@ public class GameWindow extends JFrame implements ActionListener {
     private void loadDialog() {
 
         // get path
+        
         JFileChooser fileChooser = new JFileChooser(
                 System.getProperty("user.dir"));
         int r = fileChooser.showOpenDialog(null);
@@ -192,10 +201,16 @@ public class GameWindow extends JFrame implements ActionListener {
             } catch (InvalidPathException e) {
                 JOptionPane.showMessageDialog(this, "Failed to find file");
             } catch (IOException e) {
+                leftPanel.clearGrid();
+                rightPanel.clearGrid();
+                gameBoard.clearGrid();
+                isBadGame = true; 
                 JOptionPane.showMessageDialog(this, "File has incorrect type");
+                loadDialog();
             }
         }
     }
+    
 
     private void saveGame(String filePath) {
         try {
@@ -237,7 +252,7 @@ public class GameWindow extends JFrame implements ActionListener {
 
     private void loadGame(String filePath)
             throws InvalidPathException, IOException {
-
+        isBadGame = false;
         swapper.resetModified();
 
         filedecoder = new FileDecoder();
