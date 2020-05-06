@@ -13,4 +13,19 @@ public class GameBoard extends tileGrid {
     public GameBoard(int IDOffset, int tileCount) {
         super(IDOffset, 0, tileCount, tileCount);
     }
+    
+    public boolean solved() {
+        
+        for (int i = 0; i < tileWrappers.length; i++) {
+            for (int j = 0; j < tileWrappers[i].length; j++) {
+                Tile tile = tileWrappers[i][j].getTile();
+                if (tile == null || (tile.getTileWrapperID()-16) != tile.getTileID()) {
+                    if (tile != null)
+                    System.out.println((tile.getTileWrapperID()-16) + ", " + tile.getTileID() + ", " + tile.getRotation());
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

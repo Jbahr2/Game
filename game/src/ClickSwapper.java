@@ -15,11 +15,11 @@ import javax.swing.SwingUtilities;
 class ClickSwapper extends MouseAdapter {
 
     private TileWrapper selected = null;
-
-    private boolean madeModification;
+    private GameWindow window;
     
-    public ClickSwapper() {
-        madeModification = false;
+    
+    public ClickSwapper(GameWindow window) {
+        this.window = window;
     }
 
     @Override
@@ -51,22 +51,14 @@ class ClickSwapper extends MouseAdapter {
     }
 
     public void reset() {
-        resetModified();
         deselect();
     }
     
-    public boolean getModified() {
-        return madeModification;
-    }
-    
-    public void resetModified() {
-        madeModification = false;
-    }
-    
     private void moveTile(TileWrapper tile1, TileWrapper tile2) {
-        madeModification = true;
+        window.updateModified(true);
         tile2.setTile(tile1.getTile());
         tile1.removeTile();
+        window.checkSolved();
     }
 
     private void deselect() {

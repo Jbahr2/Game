@@ -16,7 +16,7 @@ public abstract class tileGrid extends JPanel {
     private static final long serialVersionUID = 1L;
     
     
-    private TileWrapper[][] tileWrappers;
+    protected TileWrapper[][] tileWrappers;
 
     public tileGrid(int IDoffset, int spacing, int width, int height) {
         this.tileWrappers = new TileWrapper[width][height];

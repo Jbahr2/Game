@@ -21,6 +21,7 @@ import java.util.*;
 public class FileDecoder {
 
     private Tile[] tiles;
+    private long time;
 
     public void readFile(String path) throws InvalidPathException, IOException {
 
@@ -44,6 +45,7 @@ public class FileDecoder {
         }
         
         int numberOfTiles = buffer.getInt();
+        time = buffer.getLong();
 
         // create bin of IDs and rotations to grab from for randomization
         ArrayList<Integer> randomIDs = new ArrayList<Integer>(); 
@@ -58,7 +60,7 @@ public class FileDecoder {
 
 
         for (int i = 0; i < numberOfTiles; i++) {
-            int tileID = buffer.getInt();
+            int tileWrapperID = buffer.getInt();
             int degree = buffer.getInt();
 
             int numLines = buffer.getInt();
@@ -72,18 +74,19 @@ public class FileDecoder {
             }
 
             if (played) {
-                tiles[i] = new Tile(lines, degree, tileID);
+                tiles[i] = new Tile(lines, degree, i, tileWrapperID);
             } else {
-                tileID = randomIDs.remove(0);
+                time = 0;
+                tileWrapperID = randomIDs.remove(0);
                 degree = randomRotations.remove(0);
-                tiles[i] = new Tile(lines, degree, tileID);
+                tiles[i] = new Tile(lines, degree, i, tileWrapperID);
             }
         }
     }
 
     public Tile getTile(int wrapperID) {
         for (int j = 0; j < tiles.length; j++) {
-            if (tiles[j].getTileID() == wrapperID) {
+            if (tiles[j].getTileWrapperID() == wrapperID) {
                 return tiles[j];
             }
         }
@@ -96,5 +99,9 @@ public class FileDecoder {
     
     public Tile[] getTiles() {
         return tiles;
+    }
+
+    public long getTime() {
+        return time;
     }
 }
