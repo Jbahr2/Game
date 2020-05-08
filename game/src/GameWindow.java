@@ -90,6 +90,8 @@ public class GameWindow extends JFrame implements ActionListener {
         GridBagConstraints basic = new GridBagConstraints();
         basic.insets = new Insets(5, 5, 5, 5);
 
+        
+        // bad, replace
         ScheduledExecutorService executorService = Executors
                 .newSingleThreadScheduledExecutor();
         executorService.scheduleAtFixedRate(incrementTimer, 0, 1,
@@ -283,11 +285,9 @@ public class GameWindow extends JFrame implements ActionListener {
         updateTimerDisplay();
 
         leftPanel.setTiles(filedecoder);
-        leftPanel.reset();
         rightPanel.setTiles(filedecoder);
-        rightPanel.reset();
         gameBoard.setTiles(filedecoder);
-        gameBoard.reset();
+        reset();
 
     }
 
@@ -344,6 +344,7 @@ public class GameWindow extends JFrame implements ActionListener {
         return;
     }
 
+    // bad, uses anonymous class
     Runnable incrementTimer = new Runnable() {
         public void run() {
             if (modified) {
