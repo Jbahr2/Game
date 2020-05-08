@@ -91,10 +91,9 @@ public class GameWindow extends JFrame implements ActionListener {
         basic.insets = new Insets(5, 5, 5, 5);
 
         
-        // bad, replace
         ScheduledExecutorService executorService = Executors
                 .newSingleThreadScheduledExecutor();
-        executorService.scheduleAtFixedRate(incrementTimer, 0, 1,
+        executorService.scheduleAtFixedRate(new IncrementTimer(), 0, 1,
                 TimeUnit.SECONDS);
 
         // button and timer setup
@@ -344,8 +343,8 @@ public class GameWindow extends JFrame implements ActionListener {
         return;
     }
 
-    // bad, uses anonymous class
-    Runnable incrementTimer = new Runnable() {
+
+    class IncrementTimer implements Runnable {
         public void run() {
             if (modified) {
                 timer++;
