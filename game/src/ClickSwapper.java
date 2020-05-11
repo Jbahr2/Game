@@ -48,6 +48,8 @@ class ClickSwapper extends MouseAdapter {
         } else {
             illegalMove();
         }
+        window.checkSolved();
+
     }
 
     public void reset() {
@@ -58,7 +60,6 @@ class ClickSwapper extends MouseAdapter {
         window.updateModified(true);
         tile2.setTile(tile1.getTile());
         tile1.removeTile();
-        window.checkSolved();
     }
 
     private void deselect() {
