@@ -8,7 +8,7 @@
  * */
 
 @SuppressWarnings("serial")
-public class SidePanel extends tileGrid  {
+public class SidePanel extends TileGrid  {
 
     public SidePanel(int IDOffset, int tileCount) {
         super(IDOffset, 5, 1, tileCount);

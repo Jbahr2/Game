@@ -28,14 +28,16 @@ import java.nio.file.InvalidPathException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 public class GameWindow extends JFrame implements ActionListener {
-    /**
+    /* *
      * because it is a serializable object, need this or javac complains <b>a
      * lot</b>, the ID can be any integer.
-     */
+     * */
     public static final long serialVersionUID = 1;
 
     private SidePanel leftPanel, rightPanel;
@@ -43,14 +45,17 @@ public class GameWindow extends JFrame implements ActionListener {
     private ClickSwapper swapper;
     private FileDecoder filedecoder;
     private boolean isBadGame;
+    private int seconds;
+    public JLabel displayTime;
 
     public GameWindow(String s) {
         super(s);
         GridBagLayout gbl = new GridBagLayout();
         setLayout(gbl);
+        seconds = 0;
     }
 
-    /**
+    /* *
      * For the buttons
      * 
      * @param e is the ActionEvent
@@ -59,7 +64,7 @@ public class GameWindow extends JFrame implements ActionListener {
      *          event. The odd syntax for non-java people is that "exit" for
      *          instance is converted to a String object, then that object's
      *          equals() method is called.
-     */
+     * */
 
     public void actionPerformed(ActionEvent e) {
         if ("exit".equals(e.getActionCommand())) {
@@ -70,6 +75,9 @@ public class GameWindow extends JFrame implements ActionListener {
         }
         if ("file".equals(e.getActionCommand())) {
             loadOrSave();
+        }
+        if ("clock".equals(e.getActionCommand())) {;
+            updateTimer();
         }
     }
 
@@ -83,24 +91,34 @@ public class GameWindow extends JFrame implements ActionListener {
 
         GridBagConstraints basic = new GridBagConstraints();
         basic.insets = new Insets(5, 5, 5, 5);
-
-        // button setup
+        
+        // timer setup
         basic.anchor = GridBagConstraints.NORTH;
-        basic.fill = GridBagConstraints.HORIZONTAL;
+        basic.fill = GridBagConstraints.CENTER;
         basic.gridx = 1;
         basic.gridy = 0;
+        displayTime = new JLabel();
+        Timer timer = new Timer(1000, this);
+        timer.setActionCommand("clock");
+        timer.start();
+        this.addTimer(timer, displayTime, basic);
+        
+        // button setup
+        basic.fill = GridBagConstraints.HORIZONTAL;
+        basic.gridx = 1;
+        basic.gridy = 1;
         this.addButtons(basic);
 
         // side panels setup
         basic.gridx = 0;
-        basic.gridy = 1;
+        basic.gridy = 2;
         basic.anchor = GridBagConstraints.WEST;
         rightPanel = new SidePanel(0, 8);
         rightPanel.addSwapper(swapper);
         this.add(rightPanel, basic);
 
         basic.gridx = 2;
-        basic.gridy = 1;
+        basic.gridy = 2;
         basic.anchor = GridBagConstraints.EAST;
         leftPanel = new SidePanel(8, 8);
         leftPanel.addSwapper(swapper);
@@ -108,7 +126,7 @@ public class GameWindow extends JFrame implements ActionListener {
 
         // center panel setup
         basic.gridx = 1;
-        basic.gridy = 1;
+        basic.gridy = 2;
         gameBoard = new GameBoard(16, 4);
         gameBoard.addSwapper(swapper);
         add(gameBoard, basic);
@@ -127,6 +145,7 @@ public class GameWindow extends JFrame implements ActionListener {
         if(isBadGame == true) {
             return;
         }
+        seconds = 0;
         leftPanel.reset();
         rightPanel.reset();
         gameBoard.reset();
@@ -186,8 +205,6 @@ public class GameWindow extends JFrame implements ActionListener {
     }
 
     private void loadDialog() {
-
-        // get path
         
         JFileChooser fileChooser = new JFileChooser(
                 System.getProperty("user.dir"));
@@ -317,6 +334,30 @@ public class GameWindow extends JFrame implements ActionListener {
         this.add(btnMenu, basic);
 
         return;
+    }
+    
+    public void addTimer(Timer timer, JLabel displayTime, GridBagConstraints basic) {
+        JPanel background = new JPanel();
+        
+        
+        
+        
+        background.setBackground(new Color(254, 211, 48, 255));
+        
+        displayTime.setText("0 : 0 : 0");
+        
+        background.add(displayTime);
+        
+        this.add(background, basic);
+        
+    }
+    
+    public void updateTimer() {
+        seconds++;
+        
+        int hours = seconds / 3600;
+        int minutes = seconds / 60;
+        displayTime.setText("" + hours + " : "+minutes+" : "+(seconds%60));
     }
 
 };

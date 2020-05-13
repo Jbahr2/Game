@@ -7,7 +7,7 @@
  * Description: Create the grid in the center
  * */
 
-public class GameBoard extends tileGrid {
+public class GameBoard extends TileGrid {
     private static final long serialVersionUID = 1L;
 
     public GameBoard(int IDOffset, int tileCount) {
