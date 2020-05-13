@@ -12,13 +12,13 @@ import javax.swing.JPanel;
  * 
  * Description: General format for the tile holders, creates the gameboard and grid.
  * */
-public abstract class tileGrid extends JPanel {
+public abstract class TileGrid extends JPanel {
     private static final long serialVersionUID = 1L;
     
     
     protected TileWrapper[][] tileWrappers;
 
-    public tileGrid(int IDoffset, int spacing, int width, int height) {
+    public TileGrid(int IDoffset, int spacing, int width, int height) {
         this.tileWrappers = new TileWrapper[width][height];
 
         GridBagLayout gbl = new GridBagLayout();
