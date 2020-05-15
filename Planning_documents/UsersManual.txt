@@ -30,3 +30,4 @@ Once the maze tiles are put in the correct position
 with the correct rotation, the maze will be solved,
 and the timer will stop. A pop up windows will appear
 letting you know you have solved the maze.
+
