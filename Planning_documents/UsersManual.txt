@@ -1,5 +1,32 @@
+To move a tile, left-click on the tile to select it,
+then click on an empty space.
 
+A tile can only be placed on empty space,
+tiles can not be placed on top of another tile.
 
-To move a tile, click once using the left mouse button and then click once on an empty tile to move it there. 
-The selected tile that you plan on moving should have a border surronding it, letting you know which tile you have selected.
-If you click on anything that isn't an empty tile, the tile you planned on moving will be deselected, indicated by the removal of its border.
+A red border will appear if the move is illegal.
+
+The selected tile that you plan on moving should have
+a border surrounding it, letting you know which tile you
+have selected.
+
+To de-select a tile, left-click on the tile again.
+The border indicating that the tile is selected will disappear.
+
+Tiles can be rotated 90 degrees clockwise with a right-click.
+
+To load a file, press File, and select load.
+Navigate to the desired file, and select open.
+
+To save a file, press File, and select save.
+Navigate to the destination/file where you would
+like to save.
+
+Press reset to reset the maze to its initial position.
+
+Press quit to quit.
+
+Once the maze tiles are put in the correct position
+with the correct rotation, the maze will be solved,
+and the timer will stop. A pop up windows will appear
+letting you know you have solved the maze.
