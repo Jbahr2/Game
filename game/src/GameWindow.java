@@ -134,7 +134,6 @@ public class GameWindow extends JFrame implements ActionListener {
         try {
             loadGame("input/default.mze");
         } catch (InvalidPathException | IOException e) {
-            // TODO Auto-generated catch block
             loadDialog();
         }
         return;

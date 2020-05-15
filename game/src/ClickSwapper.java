@@ -43,14 +43,18 @@ class ClickSwapper extends MouseAdapter {
                 }
             } else if (SwingUtilities.isRightMouseButton(e)
                     && clickedTile.hasTile()) {
-                clickedTile.rotateTile();
-                window.checkSolved();
-
+                rotateTile(clickedTile);
             }
         } else {
             illegalMove();
         }
 
+    }
+
+    private void rotateTile(TileWrapper tile) {
+        tile.rotateTile();
+        window.updateModified(true);
+        window.checkSolved();
     }
 
     public void reset() {
