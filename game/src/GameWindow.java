@@ -234,6 +234,7 @@ public class GameWindow extends JFrame implements ActionListener {
                 rightPanel.clearGrid();
                 gameBoard.clearGrid();
                 isBadGame = true;
+                timer = 0;
                 JOptionPane.showMessageDialog(this, "File has incorrect type");
                 loadDialog();
             }
