@@ -25,10 +25,13 @@ class ClickSwapper extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
         Object source = e.getSource();
+        
+        // make sure what we clicked is a tile wrapper
         if (source instanceof TileWrapper) {
             TileWrapper clickedTile = (TileWrapper) source;
 
-            if (SwingUtilities.isLeftMouseButton(e)) { // moving tile
+            // on left click, we move a tile
+            if (SwingUtilities.isLeftMouseButton(e)) {
                 if (selected == null && clickedTile.hasTile()) {
                     // selecting a new tile
                     select(clickedTile);
@@ -37,11 +40,12 @@ class ClickSwapper extends MouseAdapter {
                     moveTile(selected, clickedTile);
                     deselect();
                 } else if (selected == clickedTile) {
+                    // deselect on clicking on the already selected tile
                     deselect();
                 } else {
                     illegalMove();
                 }
-            } else if (SwingUtilities.isRightMouseButton(e)
+            } else if (SwingUtilities.isRightMouseButton(e) // right click rotates a tile
                     && clickedTile.hasTile()) {
                 rotateTile(clickedTile);
             }
@@ -61,6 +65,9 @@ class ClickSwapper extends MouseAdapter {
         deselect();
     }
     
+    /**
+     * moves a tile from one wrapper to an empty one
+     */
     private void moveTile(TileWrapper tile1, TileWrapper tile2) {
         window.updateModified(true);
         tile2.setTile(tile1.getTile());

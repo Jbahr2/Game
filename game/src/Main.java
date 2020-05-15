@@ -25,9 +25,6 @@ import java.awt.*;
 
 public class Main {
 
-    // Probably should declare any buttons here
-    public JButton lbutton, rbutton, mbutton;
-
     public static void main(String[] args) {
         // This is the play area
         GameWindow game = new GameWindow("Group H aMaze");

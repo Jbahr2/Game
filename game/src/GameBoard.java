@@ -14,6 +14,9 @@ public class GameBoard extends TileGrid {
         super(IDOffset, 0, tileCount, tileCount);
     }
     
+    /**
+     * checks if the game is solved, called every time the board is modified
+     */
     public boolean solved() {
         
         for (int i = 0; i < tileWrappers.length; i++) {

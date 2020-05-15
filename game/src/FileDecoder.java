@@ -23,6 +23,9 @@ public class FileDecoder {
     private Tile[] tiles;
     private long time;
 
+    /**
+     * loads the tile array from a file
+     */
     public void readFile(String path) throws InvalidPathException, IOException {
 
         tiles = new Tile[16];
@@ -73,6 +76,7 @@ public class FileDecoder {
                 }
             }
 
+            // depending on if the file has been played, either load as it is, or randomize
             if (played) {
                 tiles[i] = new Tile(lines, degree, i, tileWrapperID);
             } else {
@@ -84,6 +88,9 @@ public class FileDecoder {
         }
     }
 
+    /**
+     * based on a wrappers ID, this returns the correct tile
+     */
     public Tile getTile(int wrapperID) {
         for (int j = 0; j < tiles.length; j++) {
             if (tiles[j].getTileWrapperID() == wrapperID) {

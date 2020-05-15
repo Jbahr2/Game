@@ -61,6 +61,9 @@ public class Tile extends JPanel {
 
 
     @Override
+    /**
+     * This is overwritten so lines can be drawn, and the tile rotated
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -68,6 +71,7 @@ public class Tile extends JPanel {
         G2D.setColor(Color.BLACK);
         G2D.setStroke(new BasicStroke(2.5f));
 
+        // rotates depending on tiles rotation value
         G2D.rotate(Math.toRadians(degree * 90), 50, 50);
 
         // draw lines
@@ -78,6 +82,9 @@ public class Tile extends JPanel {
     }
 
 
+    /**
+     * Converts the tile to a byte array format for when it needs to be saved in a file
+     */
     public byte[] getByteArray() {
         ByteBuffer bytes = ByteBuffer.allocate(4 + 4 + 4 + 4 * 4 * lines.length);
 

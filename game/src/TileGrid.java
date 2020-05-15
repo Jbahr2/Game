@@ -1,10 +1,3 @@
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-
-import javax.swing.JPanel;
-
 /* *
  * Authored by Group H
  * Class: Software Design 3011
@@ -12,6 +5,14 @@ import javax.swing.JPanel;
  * 
  * Description: General format for the tile holders, creates the gameboard and grid.
  * */
+
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.JPanel;
+
 public abstract class TileGrid extends JPanel {
     private static final long serialVersionUID = 1L;
     
@@ -28,6 +29,7 @@ public abstract class TileGrid extends JPanel {
         constraints.insets = new Insets(spacing, spacing, 0, 0);
         setBackground(new Color(0, 0, 0, 0));
 
+        // initialize tile wrappers
         for (int j = 0; j < height; j++) {
             constraints.gridy = j;
             for (int i = 0; i < width; i++) {
@@ -50,6 +52,9 @@ public abstract class TileGrid extends JPanel {
         }
     }
 
+    /**
+     * resets every cell individually
+     */
     public void reset() {
         for (int i = 0; i < tileWrappers.length; i++) {
             for (int j = 0; j < tileWrappers[i].length; j++) {
@@ -58,6 +63,9 @@ public abstract class TileGrid extends JPanel {
         }
     }
 
+    /**
+     * fills cells using a filedecoder, used when loading a new file
+     */
     public void setTiles(FileDecoder filedecoder) {
         reset();
         for (int i = 0; i < tileWrappers.length; i++) {
@@ -71,6 +79,10 @@ public abstract class TileGrid extends JPanel {
             }
         }
     }
+    
+    /**
+     * used by the load function when a bad file type is selected, makes the board totally clear
+     */
     public void clearGrid() {
         for (int i = 0; i < tileWrappers.length; i++) {
             for (int j = 0; j < tileWrappers[i].length; j++) {
