@@ -39,6 +39,9 @@ public abstract class TileGrid extends JPanel {
         }
     }
 
+    /**
+     * adds event listener to every cell, used for swapping and rotating
+     */
     public void addSwapper(ClickSwapper swapper) {
         for (int i = 0; i < tileWrappers.length; i++) {
             for (int j = 0; j < tileWrappers[i].length; j++) {
