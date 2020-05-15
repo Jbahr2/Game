@@ -31,7 +31,6 @@ public class Main {
     public static void main(String[] args) {
         // This is the play area
         GameWindow game = new GameWindow("Group H aMaze");
-        // have to override the default layout to reposition things!!!!!!!
 
         game.setSize(new Dimension(900, 1000));
 

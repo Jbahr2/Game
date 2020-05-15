@@ -50,6 +50,9 @@ public class GameWindow extends JFrame implements ActionListener {
     private FileDecoder filedecoder;
     private boolean modified, isBadGame;
 
+    /**
+     * Constructor for the game
+     */
     public GameWindow(String s) {
         super(s);
         GridBagLayout gbl = new GridBagLayout();
@@ -57,16 +60,8 @@ public class GameWindow extends JFrame implements ActionListener {
     }
 
     /**
-     * For the buttons
-     * 
-     * @param e is the ActionEvent
-     * 
-     *          BTW can ask the event for the name of the object generating
-     *          event. The odd syntax for non-java people is that "exit" for
-     *          instance is converted to a String object, then that object's
-     *          equals() method is called.
+     * For the buttons, connects the appropriate functions
      */
-
     public void actionPerformed(ActionEvent e) {
         if ("exit".equals(e.getActionCommand())) {
             quit();
@@ -96,13 +91,15 @@ public class GameWindow extends JFrame implements ActionListener {
         executorService.scheduleAtFixedRate(new IncrementTimer(), 0, 1,
                 TimeUnit.SECONDS);
 
-        // button and timer setup
+        // timer setup
         basic.anchor = GridBagConstraints.CENTER;
         basic.gridx = 1;
         basic.gridy = 0;
         timerDisplay = new JLabel();
         this.add(timerDisplay, basic);
         updateTimerDisplay();
+        
+        // buttons setup
         basic.fill = GridBagConstraints.HORIZONTAL;
         basic.gridx = 1;
         basic.gridy = 1;
@@ -123,7 +120,7 @@ public class GameWindow extends JFrame implements ActionListener {
         leftPanel.addSwapper(swapper);
         this.add(leftPanel, basic);
 
-        // center panel setup
+        // gameboard setup
         basic.gridx = 1;
         basic.gridy = 2;
         gameBoard = new GameBoard(16, 4);
@@ -139,6 +136,9 @@ public class GameWindow extends JFrame implements ActionListener {
         return;
     }
 
+    /**
+     * Resets the game to what the last loaded file contained
+     */
     private void reset() {
         if (isBadGame == true) {
             return;
@@ -153,29 +153,35 @@ public class GameWindow extends JFrame implements ActionListener {
         updateModified(false);
     }
 
+    /**
+     * Provides the GUI window for choosing whether a user wants to save or load, called from the File button
+     */
     private void loadOrSave() {
         // first ask to load or save
         // 0 = load, 1 = save
         Object[] options = { "Load", "Save" };
         int decision = JOptionPane.showOptionDialog(this, "Select an action",
                 "File load", JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null, // do not use a custom Icon
-                options, // the titles of buttons
-                options[0]); // default button title
+                JOptionPane.QUESTION_MESSAGE, null,
+                options,
+                options[0]);
 
-        if (decision == 0) { // loading file
+        if (decision == 0) {
             checkToSave();
             loadDialog();
-        } else if (decision == 1) { // loading file
+        } else if (decision == 1) {
             saveDialog();
         }
     }
 
+    /**
+     * Provides the GUI window for choosing a file path for saving a game
+     */
     private void saveDialog() {
         // get path
         if (isBadGame == true) {
             JOptionPane.showMessageDialog(this,
-                    "File cannot be save: Invalid Format"); // change wording
+                    "File cannot be save: Invalid Format");
             return;
         }
         JFileChooser fileChooser = new JFileChooser(
@@ -191,9 +197,9 @@ public class GameWindow extends JFrame implements ActionListener {
                 int decision = JOptionPane.showOptionDialog(this,
                         "That file already exists", "File save",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                        null, // do not use a custom Icon
-                        options, // the titles of buttons
-                        options[0]); // default button title
+                        null,
+                        options,
+                        options[0]);
 
                 if (decision == 0) {
                     saveGame(filePath);
@@ -206,10 +212,12 @@ public class GameWindow extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Provides the GUI window for choosing a file path for loading a game
+     */
     private void loadDialog() {
 
         // get path
-
         JFileChooser fileChooser = new JFileChooser(
                 System.getProperty("user.dir"));
         int r = fileChooser.showOpenDialog(null);
@@ -232,6 +240,9 @@ public class GameWindow extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Saves the current game to a given filepath
+     */
     private void saveGame(String filePath) {
         try {
             updateModified(false);
@@ -265,12 +276,14 @@ public class GameWindow extends JFrame implements ActionListener {
             saveFile.close();
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
     }
 
+    /**
+     * Loads tiles and their rotations from a filepath, replacing the last game
+     */
     private void loadGame(String filePath)
             throws InvalidPathException, IOException {
         isBadGame = false;
@@ -289,21 +302,27 @@ public class GameWindow extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Called from the quit button, closes exits the program
+     */
     private void quit() {
         checkToSave();
         System.exit(0);
 
     }
 
+    /**
+     * Called on quit and load to make sure the user doesnt want to save before losing their progress
+     */
     private void checkToSave() {
         if (modified) {
             Object[] options = { "Save", "Don't save" };
             int decision = JOptionPane.showOptionDialog(this,
                     "Would you like to save first?", "File select",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                    null, // do not use a custom Icon
-                    options, // the titles of buttons
-                    options[0]); // default button title
+                    null,
+                    options,
+                    options[0]);
 
             if (decision == 0) {
                 saveDialog();
@@ -342,7 +361,9 @@ public class GameWindow extends JFrame implements ActionListener {
         return;
     }
 
-
+    /**
+     * Keeps track of the time spent since the first move of a game
+     */
     class IncrementTimer implements Runnable {
         public void run() {
             if (modified) {
@@ -352,6 +373,9 @@ public class GameWindow extends JFrame implements ActionListener {
         }
     };
 
+    /**
+     * Used to convert the time variable into a string of the correct format and display it
+     */
     private void updateTimerDisplay() {
         int s = (int) (timer % 60);
         int m = (int) (timer / 60) % 60;
@@ -371,10 +395,16 @@ public class GameWindow extends JFrame implements ActionListener {
         timerDisplay.setText(displayTime);
     }
 
+    /**
+     * This allows other classes like ClickSwapper to update when the board has been modified
+     */
     public void updateModified(boolean b) {
         modified = b;
     }
 
+    /**
+     * Checks and then displays a prompt if the user has won, checked every time the board is modified
+     */
     public void checkSolved() {
         if (gameBoard.solved()) {
             JOptionPane.showMessageDialog(this, "You have Won! \nTime: " + timerDisplay.getText());
